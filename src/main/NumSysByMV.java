@@ -141,7 +141,6 @@ public class NumSysByMV implements ActionListener {
             }
             useranswer.setText(octal);            
             
-            System.out.println();
             
 
         }
