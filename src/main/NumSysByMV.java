@@ -114,6 +114,13 @@ public class NumSysByMV implements ActionListener {
             // Increment usage count
             usageCount++;
 
+            if (usageCount == 100) {
+                JOptionPane.showMessageDialog(null, 
+                    "Congratulations! You've used the program 100 times!", 
+                    "Milestone Achieved", 
+                    JOptionPane.INFORMATION_MESSAGE);
+            }
+
         } catch (NumberFormatException ex) {
             useranswer.setText("Invalid Input");
         }
