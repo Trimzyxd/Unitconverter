@@ -9,16 +9,16 @@ public class NumSysByMV implements ActionListener {
 
     public static JLabel userlabel;
     public static JTextField userText;
-    public static JButton binaryButton, hexaButton, octalButton;
+    public static JButton binaryButton, hexaButton, octalButton, kgToLbButton, lbToKgButton;
     public static JTextField useranswer;
     public static JLabel answer;
     private static int usageCount = 0; // Counter for session usage
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("NumSys Converters By Group 6");
+        JFrame frame = new JFrame("Unit Converter By Group 6");
         JPanel panel = new JPanel();
 
-        frame.setSize(340, 260);
+        frame.setSize(340, 320);
         panel.setBackground(Color.BLACK);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,7 +29,7 @@ public class NumSysByMV implements ActionListener {
         panel.setLayout(null);
 
         // Change color of labels
-        userlabel = new JLabel("<html>Enter Decimal<br>Number</html>");
+        userlabel = new JLabel("<html>Enter Decimal<br>or Weight</html>");
         userlabel.setForeground(Color.WHITE);
         userlabel.setBounds(10, 12, 80, 40);
         panel.add(userlabel);
@@ -38,11 +38,11 @@ public class NumSysByMV implements ActionListener {
         userText.setBounds(95, 20, 165, 25);
         panel.add(userText);
 
-        // Buttons for conversions
+        // Buttons for Number System conversions
         binaryButton = new JButton("Binary");
         binaryButton.setForeground(Color.WHITE);
         binaryButton.setBackground(Color.BLACK);
-        binaryButton.setBounds(120, 60, 100, 25);
+        binaryButton.setBounds(10, 60, 100, 25);
         binaryButton.setActionCommand("Binary");
         binaryButton.addActionListener(new NumSysByMV());
         panel.add(binaryButton);
@@ -50,7 +50,7 @@ public class NumSysByMV implements ActionListener {
         hexaButton = new JButton("Hexa");
         hexaButton.setForeground(Color.WHITE);
         hexaButton.setBackground(Color.BLACK);
-        hexaButton.setBounds(120, 90, 100, 25);
+        hexaButton.setBounds(10, 90, 100, 25);
         hexaButton.setActionCommand("Hexa");
         hexaButton.addActionListener(new NumSysByMV());
         panel.add(hexaButton);
@@ -58,10 +58,27 @@ public class NumSysByMV implements ActionListener {
         octalButton = new JButton("Octal");
         octalButton.setForeground(Color.WHITE);
         octalButton.setBackground(Color.BLACK);
-        octalButton.setBounds(120, 120, 100, 25);
+        octalButton.setBounds(10, 120, 100, 25);
         octalButton.setActionCommand("Octal");
         octalButton.addActionListener(new NumSysByMV());
         panel.add(octalButton);
+
+        // Buttons for Weight Conversions
+        kgToLbButton = new JButton("Kg to Lb");
+        kgToLbButton.setForeground(Color.WHITE);
+        kgToLbButton.setBackground(Color.BLACK);
+        kgToLbButton.setBounds(120, 60, 100, 25);
+        kgToLbButton.setActionCommand("KgToLb");
+        kgToLbButton.addActionListener(new NumSysByMV());
+        panel.add(kgToLbButton);
+
+        lbToKgButton = new JButton("Lb to Kg");
+        lbToKgButton.setForeground(Color.WHITE);
+        lbToKgButton.setBackground(Color.BLACK);
+        lbToKgButton.setBounds(120, 90, 100, 25);
+        lbToKgButton.setActionCommand("LbToKg");
+        lbToKgButton.addActionListener(new NumSysByMV());
+        panel.add(lbToKgButton);
 
         useranswer = new JTextField();
         useranswer.setBounds(95, 160, 165, 25);
@@ -90,22 +107,34 @@ public class NumSysByMV implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
-            String number = userText.getText();
-            int decimal = Integer.parseInt(number);
-
+            String input = userText.getText();
+            
             switch (e.getActionCommand()) {
                 case "Binary":
+                    int decimal = Integer.parseInt(input);
                     useranswer.setText(Integer.toBinaryString(decimal));
                     break;
                 case "Hexa":
+                    decimal = Integer.parseInt(input);
                     useranswer.setText(Integer.toHexString(decimal).toUpperCase());
                     break;
                 case "Octal":
+                    decimal = Integer.parseInt(input);
                     String octal = Integer.toOctalString(decimal);
                     while (octal.length() < 3) {
                         octal = "0" + octal;
                     }
                     useranswer.setText(octal);
+                    break;
+                case "KgToLb":
+                    double kilograms = Double.parseDouble(input);
+                    double pounds = kilograms * 2.20462;
+                    useranswer.setText(String.format("%.2f pounds", pounds));
+                    break;
+                case "LbToKg":
+                    double lbs = Double.parseDouble(input);
+                    double kgs = lbs / 2.20462;
+                    useranswer.setText(String.format("%.2f kilograms", kgs));
                     break;
                 default:
                     useranswer.setText("Error");
@@ -115,10 +144,10 @@ public class NumSysByMV implements ActionListener {
             usageCount++;
 
             if (usageCount == 100) {
-                JOptionPane.showMessageDialog(null, 
-                    "Congratulations! You've used the program 100 times!", 
-                    "Milestone Achieved", 
-                    JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Congratulations! You've used the program 100 times!",
+                        "Milestone Achieved",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
 
         } catch (NumberFormatException ex) {
