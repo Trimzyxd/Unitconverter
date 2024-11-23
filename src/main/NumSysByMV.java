@@ -1,143 +1,151 @@
 package main;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class NumSysByMV implements ActionListener {
 
-    public static JLabel userlabel;
+    public static JLabel userLabel;
     public static JTextField userText;
     public static JButton binaryButton, hexaButton, octalButton, kgToLbButton, lbToKgButton;
-    public static JTextField useranswer;
+    public static JTextField userAnswer;
     public static JLabel answer;
     private static int usageCount = 0; // Counter for session usage
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Unit Converter By Group 6");
-        JPanel panel = new JPanel();
-
-        frame.setSize(340, 320);
-        panel.setBackground(Color.BLACK);
-
+        // Create main frame
+        JFrame frame = new JFrame("Unit Converter - Group 6");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().setBackground(Color.BLUE);
+        frame.setSize(400, 400);
 
+        // Main panel with a modern look
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(60, 63, 65));
+        panel.setLayout(new GridBagLayout());
         frame.add(panel);
 
-        panel.setLayout(null);
+        // GridBagLayout constraints
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Change color of labels
-        userlabel = new JLabel("<html>Enter Decimal<br>or Weight</html>");
-        userlabel.setForeground(Color.WHITE);
-        userlabel.setBounds(10, 12, 80, 40);
-        panel.add(userlabel);
+        // Input Label
+        userLabel = new JLabel("Enter Decimal or Weight:");
+        userLabel.setForeground(Color.WHITE);
+        userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        panel.add(userLabel, gbc);
 
+        // Input TextField
         userText = new JTextField();
-        userText.setBounds(95, 20, 165, 25);
-        panel.add(userText);
+        userText.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        panel.add(userText, gbc);
 
-        // Buttons for Number System conversions
-        binaryButton = new JButton("Binary");
-        binaryButton.setForeground(Color.WHITE);
-        binaryButton.setBackground(Color.BLACK);
-        binaryButton.setBounds(10, 60, 100, 25);
-        binaryButton.setActionCommand("Binary");
-        binaryButton.addActionListener(new NumSysByMV());
-        panel.add(binaryButton);
+        // Buttons for conversions
+        binaryButton = createButton("Binary");
+        hexaButton = createButton("Hexa");
+        octalButton = createButton("Octal");
+        kgToLbButton = createButton("Kg to Lb");
+        lbToKgButton = createButton("Lb to Kg");
 
-        hexaButton = new JButton("Hexa");
-        hexaButton.setForeground(Color.WHITE);
-        hexaButton.setBackground(Color.BLACK);
-        hexaButton.setBounds(10, 90, 100, 25);
-        hexaButton.setActionCommand("Hexa");
-        hexaButton.addActionListener(new NumSysByMV());
-        panel.add(hexaButton);
+        gbc.gridwidth = 1;
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        panel.add(binaryButton, gbc);
+        gbc.gridx = 1;
+        panel.add(kgToLbButton, gbc);
 
-        octalButton = new JButton("Octal");
-        octalButton.setForeground(Color.WHITE);
-        octalButton.setBackground(Color.BLACK);
-        octalButton.setBounds(10, 120, 100, 25);
-        octalButton.setActionCommand("Octal");
-        octalButton.addActionListener(new NumSysByMV());
-        panel.add(octalButton);
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        panel.add(hexaButton, gbc);
+        gbc.gridx = 1;
+        panel.add(lbToKgButton, gbc);
 
-        // Buttons for Weight Conversions
-        kgToLbButton = new JButton("Kg to Lb");
-        kgToLbButton.setForeground(Color.WHITE);
-        kgToLbButton.setBackground(Color.BLACK);
-        kgToLbButton.setBounds(120, 60, 100, 25);
-        kgToLbButton.setActionCommand("KgToLb");
-        kgToLbButton.addActionListener(new NumSysByMV());
-        panel.add(kgToLbButton);
+        gbc.gridy = 4;
+        gbc.gridx = 0;
+        panel.add(octalButton, gbc);
 
-        lbToKgButton = new JButton("Lb to Kg");
-        lbToKgButton.setForeground(Color.WHITE);
-        lbToKgButton.setBackground(Color.BLACK);
-        lbToKgButton.setBounds(120, 90, 100, 25);
-        lbToKgButton.setActionCommand("LbToKg");
-        lbToKgButton.addActionListener(new NumSysByMV());
-        panel.add(lbToKgButton);
-
-        useranswer = new JTextField();
-        useranswer.setBounds(95, 160, 165, 25);
-        useranswer.setEditable(false);
-        panel.add(useranswer);
-
-        answer = new JLabel("Answer =");
+        // Answer field and label
+        answer = new JLabel("Answer:");
         answer.setForeground(Color.WHITE);
-        answer.setBounds(10, 160, 80, 25);
-        panel.add(answer);
+        answer.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 5;
+        gbc.gridx = 0;
+        gbc.gridwidth = 1;
+        panel.add(answer, gbc);
 
-        // Display usage count
-        JLabel usageLabel = new JLabel("Program Used: " + usageCount + " times");
+        userAnswer = new JTextField();
+        userAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
+        userAnswer.setEditable(false);
+        gbc.gridx = 1;
+        panel.add(userAnswer, gbc);
+
+        // Usage label
+        JLabel usageLabel = new JLabel("Program Used: 0 times");
         usageLabel.setForeground(Color.WHITE);
-        usageLabel.setBounds(10, 200, 200, 25);
-        panel.add(usageLabel);
+        usageLabel.setFont(new Font("Arial", Font.ITALIC, 12));
+        gbc.gridy = 6;
+        gbc.gridx = 0;
+        gbc.gridwidth = 2;
+        panel.add(usageLabel, gbc);
 
-        // Update the usage count in real-time
+        // Update usage count dynamically
         Timer timer = new Timer(500, e -> usageLabel.setText("Program Used: " + usageCount + " times"));
         timer.start();
 
-        frame.setLocation(535, 300);
+        // Center the frame and make it visible
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    // Helper method to create buttons
+    private static JButton createButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.BOLD, 12));
+        button.setBackground(new Color(43, 43, 43));
+        button.setForeground(Color.WHITE);
+        button.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
+        button.addActionListener(new NumSysByMV());
+        button.setActionCommand(text);
+        return button;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
             String input = userText.getText();
-            
+
             switch (e.getActionCommand()) {
                 case "Binary":
                     int decimal = Integer.parseInt(input);
-                    useranswer.setText(Integer.toBinaryString(decimal));
+                    userAnswer.setText(Integer.toBinaryString(decimal));
                     break;
                 case "Hexa":
                     decimal = Integer.parseInt(input);
-                    useranswer.setText(Integer.toHexString(decimal).toUpperCase());
+                    userAnswer.setText(Integer.toHexString(decimal).toUpperCase());
                     break;
                 case "Octal":
                     decimal = Integer.parseInt(input);
-                    String octal = Integer.toOctalString(decimal);
-                    while (octal.length() < 3) {
-                        octal = "0" + octal;
-                    }
-                    useranswer.setText(octal);
+                    userAnswer.setText(Integer.toOctalString(decimal));
                     break;
-                case "KgToLb":
+                case "Kg to Lb":
                     double kilograms = Double.parseDouble(input);
                     double pounds = kilograms * 2.20462;
-                    useranswer.setText(String.format("%.2f pounds", pounds));
+                    userAnswer.setText(String.format("%.2f pounds", pounds));
                     break;
-                case "LbToKg":
+                case "Lb to Kg":
                     double lbs = Double.parseDouble(input);
                     double kgs = lbs / 2.20462;
-                    useranswer.setText(String.format("%.2f kilograms", kgs));
+                    userAnswer.setText(String.format("%.2f kilograms", kgs));
                     break;
                 default:
-                    useranswer.setText("Error");
+                    userAnswer.setText("Error");
             }
 
             // Increment usage count
@@ -151,7 +159,7 @@ public class NumSysByMV implements ActionListener {
             }
 
         } catch (NumberFormatException ex) {
-            useranswer.setText("Invalid Input");
+            userAnswer.setText("Invalid Input");
         }
     }
 }
