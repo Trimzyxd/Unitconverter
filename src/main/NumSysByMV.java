@@ -16,12 +16,12 @@ public class NumSysByMV implements ActionListener {
     private static int usageCount = 0; // Counter for session usage
 
     public static void main(String[] args) {
-        // Create main frame
+        // main frame
         JFrame frame = new JFrame("Unit Converter - Group 6");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
 
-        // Main panel with a modern look
+        // Main panel
         JPanel panel = new JPanel();
         panel.setBackground(new Color(60, 63, 65));
         panel.setLayout(new GridBagLayout());
@@ -104,11 +104,11 @@ public class NumSysByMV implements ActionListener {
         gbc.gridwidth = 2;
         panel.add(usageLabel, gbc);
 
-        // Update usage count dynamically
+        // usage count updating
         Timer timer = new Timer(500, e -> usageLabel.setText("Program Used: " + usageCount + " times"));
         timer.start();
 
-        // Center the frame and make it visible
+        // para ma center yung frame
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
@@ -174,7 +174,7 @@ public class NumSysByMV implements ActionListener {
                     userAnswer.setText("Error");
             }
 
-            // Increment usage count
+            // usage count
             usageCount++;
 
             if (usageCount == 100) {
