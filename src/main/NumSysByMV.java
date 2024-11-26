@@ -9,7 +9,8 @@ public class NumSysByMV implements ActionListener {
 
     public static JLabel userLabel;
     public static JTextField userText;
-    public static JButton binaryButton, hexaButton, octalButton, kgToLbButton, lbToKgButton;
+    public static JComboBox<String> conversionBox;
+    public static JButton convertButton;
     public static JTextField userAnswer;
     public static JLabel answer;
     private static int usageCount = 0; // Counter for session usage
@@ -32,7 +33,7 @@ public class NumSysByMV implements ActionListener {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Input Label
-        userLabel = new JLabel("Enter Decimal or Weight:");
+        userLabel = new JLabel("Enter a Value:");
         userLabel.setForeground(Color.WHITE);
         userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 0;
@@ -47,37 +48,45 @@ public class NumSysByMV implements ActionListener {
         gbc.gridwidth = 2;
         panel.add(userText, gbc);
 
-        // Buttons for conversions
-        binaryButton = createButton("Binary");
-        hexaButton = createButton("Hexa");
-        octalButton = createButton("Octal");
-        kgToLbButton = createButton("Kg to Lb");
-        lbToKgButton = createButton("Lb to Kg");
-
-        gbc.gridwidth = 1;
+        // Dropdown menu for conversion options
+        String[] conversionOptions = {
+            "Decimal to Binary",
+            "Decimal to Hexadecimal",
+            "Decimal to Octal",
+            "Binary to Decimal",
+            "Binary to Octal",
+            "Binary to Hexadecimal",
+            "Hexadecimal to Decimal",
+            "Hexadecimal to Binary",
+            "Octal to Decimal",
+            "Octal to Binary",
+            "Kg to Lb",
+            "Lb to Kg"
+        };
+        conversionBox = new JComboBox<>(conversionOptions);
+        conversionBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 2;
-        gbc.gridx = 0;
-        panel.add(binaryButton, gbc);
-        gbc.gridx = 1;
-        panel.add(kgToLbButton, gbc);
+        gbc.gridwidth = 2;
+        panel.add(conversionBox, gbc);
 
+        // Convert button
+        convertButton = new JButton("Convert");
+        convertButton.setFont(new Font("Arial", Font.BOLD, 14));
+        convertButton.setBackground(new Color(43, 43, 43));
+        convertButton.setForeground(Color.WHITE);
+        convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
+        convertButton.addActionListener(new NumSysByMV());
         gbc.gridy = 3;
-        gbc.gridx = 0;
-        panel.add(hexaButton, gbc);
-        gbc.gridx = 1;
-        panel.add(lbToKgButton, gbc);
-
-        gbc.gridy = 4;
-        gbc.gridx = 0;
-        panel.add(octalButton, gbc);
+        gbc.gridwidth = 2;
+        panel.add(convertButton, gbc);
 
         // Answer field and label
         answer = new JLabel("Answer:");
         answer.setForeground(Color.WHITE);
         answer.setFont(new Font("Arial", Font.PLAIN, 14));
-        gbc.gridy = 5;
-        gbc.gridx = 0;
+        gbc.gridy = 4;
         gbc.gridwidth = 1;
+        gbc.gridx = 0;
         panel.add(answer, gbc);
 
         userAnswer = new JTextField();
@@ -90,7 +99,7 @@ public class NumSysByMV implements ActionListener {
         JLabel usageLabel = new JLabel("Program Used: 0 times");
         usageLabel.setForeground(Color.WHITE);
         usageLabel.setFont(new Font("Arial", Font.ITALIC, 12));
-        gbc.gridy = 6;
+        gbc.gridy = 5;
         gbc.gridx = 0;
         gbc.gridwidth = 2;
         panel.add(usageLabel, gbc);
@@ -104,35 +113,52 @@ public class NumSysByMV implements ActionListener {
         frame.setVisible(true);
     }
 
-    // Helper method to create buttons
-    private static JButton createButton(String text) {
-        JButton button = new JButton(text);
-        button.setFont(new Font("Arial", Font.BOLD, 12));
-        button.setBackground(new Color(43, 43, 43));
-        button.setForeground(Color.WHITE);
-        button.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
-        button.addActionListener(new NumSysByMV());
-        button.setActionCommand(text);
-        return button;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         try {
             String input = userText.getText();
+            String selectedConversion = (String) conversionBox.getSelectedItem();
 
-            switch (e.getActionCommand()) {
-                case "Binary":
+            switch (selectedConversion) {
+                case "Decimal to Binary":
                     int decimal = Integer.parseInt(input);
                     userAnswer.setText(Integer.toBinaryString(decimal));
                     break;
-                case "Hexa":
+                case "Decimal to Hexadecimal":
                     decimal = Integer.parseInt(input);
                     userAnswer.setText(Integer.toHexString(decimal).toUpperCase());
                     break;
-                case "Octal":
+                case "Decimal to Octal":
                     decimal = Integer.parseInt(input);
                     userAnswer.setText(Integer.toOctalString(decimal));
+                    break;
+                case "Binary to Decimal":
+                    int binary = Integer.parseInt(input, 2);
+                    userAnswer.setText(String.valueOf(binary));
+                    break;
+                case "Binary to Octal":
+                    binary = Integer.parseInt(input, 2);
+                    userAnswer.setText(Integer.toOctalString(binary));
+                    break;
+                case "Binary to Hexadecimal":
+                    binary = Integer.parseInt(input, 2);
+                    userAnswer.setText(Integer.toHexString(binary).toUpperCase());
+                    break;
+                case "Hexadecimal to Decimal":
+                    int hex = Integer.parseInt(input, 16);
+                    userAnswer.setText(String.valueOf(hex));
+                    break;
+                case "Hexadecimal to Binary":
+                    hex = Integer.parseInt(input, 16);
+                    userAnswer.setText(Integer.toBinaryString(hex));
+                    break;
+                case "Octal to Decimal":
+                    int octal = Integer.parseInt(input, 8);
+                    userAnswer.setText(String.valueOf(octal));
+                    break;
+                case "Octal to Binary":
+                    octal = Integer.parseInt(input, 8);
+                    userAnswer.setText(Integer.toBinaryString(octal));
                     break;
                 case "Kg to Lb":
                     double kilograms = Double.parseDouble(input);
