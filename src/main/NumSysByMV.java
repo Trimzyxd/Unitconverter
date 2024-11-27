@@ -9,17 +9,18 @@ public class NumSysByMV implements ActionListener {
 
     public static JLabel userLabel;
     public static JTextField userText;
-    public static JComboBox<String> conversionBox;
+    public static JComboBox<String> fromBox;
+    public static JComboBox<String> toBox;
     public static JButton convertButton;
     public static JTextField userAnswer;
     public static JLabel answer;
     private static int usageCount = 0; // Counter for session usage
 
     public static void main(String[] args) {
-        // main frame
+        // Main frame
         JFrame frame = new JFrame("Unit Converter - Group 6");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 400);
+        frame.setSize(400, 500);
 
         // Main panel
         JPanel panel = new JPanel();
@@ -48,26 +49,39 @@ public class NumSysByMV implements ActionListener {
         gbc.gridwidth = 2;
         panel.add(userText, gbc);
 
-        // Dropdown menu for conversion options
-        String[] conversionOptions = {
-            "Decimal to Binary",
-            "Decimal to Hexadecimal",
-            "Decimal to Octal",
-            "Binary to Decimal",
-            "Binary to Octal",
-            "Binary to Hexadecimal",
-            "Hexadecimal to Decimal",
-            "Hexadecimal to Binary",
-            "Octal to Decimal",
-            "Octal to Binary",
-            "Kg to Lb",
-            "Lb to Kg"
+        // Dropdown menus for conversion options
+        String[] units = {
+            "Decimal", "Binary", "Hexadecimal", "Octal", "Kg", "Lb"
         };
-        conversionBox = new JComboBox<>(conversionOptions);
-        conversionBox.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        // From label
+        JLabel fromLabel = new JLabel("From:");
+        fromLabel.setForeground(Color.WHITE); // Set font color to white
+        fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        panel.add(conversionBox, gbc);
+        gbc.gridx = 0;
+        panel.add(fromLabel, gbc);
+
+        // From dropdown
+        fromBox = new JComboBox<>(units);
+        fromBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(fromBox, gbc);
+
+        // To label
+        JLabel toLabel = new JLabel("To:");
+        toLabel.setForeground(Color.WHITE); // Set font color to white
+        toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        panel.add(toLabel, gbc);
+
+        // To dropdown
+        toBox = new JComboBox<>(units);
+        toBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(toBox, gbc);
+
 
         // Convert button
         convertButton = new JButton("Convert");
@@ -76,7 +90,7 @@ public class NumSysByMV implements ActionListener {
         convertButton.setForeground(Color.WHITE);
         convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
         convertButton.addActionListener(new NumSysByMV());
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.gridwidth = 2;
         panel.add(convertButton, gbc);
 
@@ -84,7 +98,7 @@ public class NumSysByMV implements ActionListener {
         answer = new JLabel("Answer:");
         answer.setForeground(Color.WHITE);
         answer.setFont(new Font("Arial", Font.PLAIN, 14));
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         panel.add(answer, gbc);
@@ -99,7 +113,7 @@ public class NumSysByMV implements ActionListener {
         JLabel usageLabel = new JLabel("Program Used: 0 times");
         usageLabel.setForeground(Color.WHITE);
         usageLabel.setFont(new Font("Arial", Font.ITALIC, 12));
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.gridx = 0;
         gbc.gridwidth = 2;
         panel.add(usageLabel, gbc);
@@ -108,84 +122,96 @@ public class NumSysByMV implements ActionListener {
         Timer timer = new Timer(500, e -> usageLabel.setText("Program Used: " + usageCount + " times"));
         timer.start();
 
-        // para ma center yung frame
+        // Center frame
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        try {
-            String input = userText.getText();
-            String selectedConversion = (String) conversionBox.getSelectedItem();
+public void actionPerformed(ActionEvent e) {
+    try {
+        String input = userText.getText();
+        String fromUnit = (String) fromBox.getSelectedItem();
+        String toUnit = (String) toBox.getSelectedItem();
 
-            switch (selectedConversion) {
-                case "Decimal to Binary":
-                    int decimal = Integer.parseInt(input);
-                    userAnswer.setText(Integer.toBinaryString(decimal));
-                    break;
-                case "Decimal to Hexadecimal":
-                    decimal = Integer.parseInt(input);
-                    userAnswer.setText(Integer.toHexString(decimal).toUpperCase());
-                    break;
-                case "Decimal to Octal":
-                    decimal = Integer.parseInt(input);
-                    userAnswer.setText(Integer.toOctalString(decimal));
-                    break;
-                case "Binary to Decimal":
-                    int binary = Integer.parseInt(input, 2);
-                    userAnswer.setText(String.valueOf(binary));
-                    break;
-                case "Binary to Octal":
-                    binary = Integer.parseInt(input, 2);
-                    userAnswer.setText(Integer.toOctalString(binary));
-                    break;
-                case "Binary to Hexadecimal":
-                    binary = Integer.parseInt(input, 2);
-                    userAnswer.setText(Integer.toHexString(binary).toUpperCase());
-                    break;
-                case "Hexadecimal to Decimal":
-                    int hex = Integer.parseInt(input, 16);
-                    userAnswer.setText(String.valueOf(hex));
-                    break;
-                case "Hexadecimal to Binary":
-                    hex = Integer.parseInt(input, 16);
-                    userAnswer.setText(Integer.toBinaryString(hex));
-                    break;
-                case "Octal to Decimal":
-                    int octal = Integer.parseInt(input, 8);
-                    userAnswer.setText(String.valueOf(octal));
-                    break;
-                case "Octal to Binary":
-                    octal = Integer.parseInt(input, 8);
-                    userAnswer.setText(Integer.toBinaryString(octal));
-                    break;
-                case "Kg to Lb":
-                    double kilograms = Double.parseDouble(input);
-                    double pounds = kilograms * 2.20462;
-                    userAnswer.setText(String.format("%.2f pounds", pounds));
-                    break;
-                case "Lb to Kg":
-                    double lbs = Double.parseDouble(input);
-                    double kgs = lbs / 2.20462;
-                    userAnswer.setText(String.format("%.2f kilograms", kgs));
-                    break;
-                default:
-                    userAnswer.setText("Error");
+        // Check for incompatible categories
+        boolean isNumberSystem = fromUnit.equals("Decimal") || fromUnit.equals("Binary") ||
+                                 fromUnit.equals("Hexadecimal") || fromUnit.equals("Octal");
+
+        boolean isWeightClass = fromUnit.equals("Kg") || fromUnit.equals("Lb");
+
+        if ((isNumberSystem && toUnit.equals("Kg")) || 
+            (isNumberSystem && toUnit.equals("Lb")) || 
+            (isWeightClass && toUnit.equals("Decimal")) || 
+            (isWeightClass && toUnit.equals("Binary")) || 
+            (isWeightClass && toUnit.equals("Hexadecimal")) || 
+            (isWeightClass && toUnit.equals("Octal"))) {
+            userAnswer.setText("Invalid Conversion");
+            JOptionPane.showMessageDialog(null, 
+                "Invalid Conversion", 
+                "Invalid Conversion", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String result = "";
+
+        // Conversion logic
+        if (fromUnit.equals("Decimal")) {
+            int decimal = Integer.parseInt(input);
+            if (toUnit.equals("Binary")) {
+                result = Integer.toBinaryString(decimal);
+            } else if (toUnit.equals("Hexadecimal")) {
+                result = Integer.toHexString(decimal).toUpperCase();
+            } else if (toUnit.equals("Octal")) {
+                result = Integer.toOctalString(decimal);
+            } else if (toUnit.equals("Decimal")) {
+                result = input; // No conversion
             }
-
-            // usage count
-            usageCount++;
-
-            if (usageCount == 100) {
-                JOptionPane.showMessageDialog(null,
-                        "Congratulations! You've used the program 100 times!",
-                        "Milestone Achieved",
-                        JOptionPane.INFORMATION_MESSAGE);
+        } else if (fromUnit.equals("Binary")) {
+            int binary = Integer.parseInt(input, 2);
+            if (toUnit.equals("Decimal")) {
+                result = String.valueOf(binary);
+            } else if (toUnit.equals("Octal")) {
+                result = Integer.toOctalString(binary);
+            } else if (toUnit.equals("Hexadecimal")) {
+                result = Integer.toHexString(binary).toUpperCase();
+            } else if (toUnit.equals("Binary")) {
+                result = input; // No conversion
             }
+        } else if (fromUnit.equals("Kg")) {
+            double kilograms = Double.parseDouble(input);
+            if (toUnit.equals("Lb")) {
+                result = String.format("%.2f", kilograms * 2.20462) + " pounds";
+            } else if (toUnit.equals("Kg")) {
+                result = input + " kilograms"; // No conversion
+            }
+        } else if (fromUnit.equals("Lb")) {
+            double pounds = Double.parseDouble(input);
+            if (toUnit.equals("Kg")) {
+                result = String.format("%.2f", pounds / 2.20462) + " kilograms";
+            } else if (toUnit.equals("Lb")) {
+                result = input + " pounds"; // No conversion
+            }
+        }
 
-        } catch (NumberFormatException ex) {
-            userAnswer.setText("Invalid Input");
+        userAnswer.setText(result);
+
+        // usage count
+        usageCount++;
+        if (usageCount == 100) {
+            JOptionPane.showMessageDialog(null,
+                    "Congratulations! You've used the program 100 times!",
+                    "Milestone Achieved",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    } catch (NumberFormatException ex) {
+        userAnswer.setText("Invalid Input");
+        JOptionPane.showMessageDialog(null, 
+            "Please enter a valid numeric value.", 
+            "Invalid Input", 
+            JOptionPane.ERROR_MESSAGE);
         }
     }
 }
