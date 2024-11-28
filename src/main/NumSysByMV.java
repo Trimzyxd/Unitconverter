@@ -7,13 +7,21 @@ import javax.swing.*;
 
 public class NumSysByMV implements ActionListener {
 
-    public static JLabel userLabel;
-    public static JTextField userText;
-    public static JComboBox<String> fromBox;
-    public static JComboBox<String> toBox;
-    public static JButton convertButton;
-    public static JTextField userAnswer;
-    public static JLabel answer;
+    // Components for Number System Tab
+    private JTextField nsUserText;
+    private JComboBox<String> nsFromBox, nsToBox;
+    private JTextField nsUserAnswer;
+
+    // Components for Weight Tab
+    private JTextField weightUserText;
+    private JComboBox<String> weightFromBox, weightToBox;
+    private JTextField weightUserAnswer;
+
+    // Components for Temperature Tab
+    private JTextField tempUserText;
+    private JComboBox<String> tempFromBox, tempToBox;
+    private JTextField tempUserAnswer;
+
     private static int usageCount = 0; // Counter for session usage
 
     public static void main(String[] args) {
@@ -25,10 +33,13 @@ public class NumSysByMV implements ActionListener {
         // Tabbed Pane
         JTabbedPane tabbedPane = new JTabbedPane();
 
+        // Instance of this class for handling actions
+        NumSysByMV converter = new NumSysByMV();
+
         // Add panels for each tab
-        tabbedPane.addTab("Number System", createNumberSystemPanel());
-        tabbedPane.addTab("Weight", createWeightPanel());
-        tabbedPane.addTab("Temperature", createTemperaturePanel());
+        tabbedPane.addTab("Number System", converter.createNumberSystemPanel());
+        tabbedPane.addTab("Weight", converter.createWeightPanel());
+        tabbedPane.addTab("Temperature", converter.createTemperaturePanel());
 
         // Add tabbed pane to the frame
         frame.add(tabbedPane);
@@ -39,7 +50,7 @@ public class NumSysByMV implements ActionListener {
     }
 
     // Creates the Number System conversion panel
-    private static JPanel createNumberSystemPanel() {
+    private JPanel createNumberSystemPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(60, 63, 65));
         GridBagConstraints gbc = new GridBagConstraints();
@@ -55,10 +66,10 @@ public class NumSysByMV implements ActionListener {
         panel.add(userLabel, gbc);
 
         // Input TextField
-        userText = new JTextField();
-        userText.setFont(new Font("Arial", Font.PLAIN, 14));
+        nsUserText = new JTextField();
+        nsUserText.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 1;
-        panel.add(userText, gbc);
+        panel.add(nsUserText, gbc);
 
         // From label and dropdown
         JLabel fromLabel = new JLabel("From:");
@@ -69,10 +80,10 @@ public class NumSysByMV implements ActionListener {
         panel.add(fromLabel, gbc);
 
         String[] numUnits = {"Decimal", "Binary", "Hexadecimal", "Octal"};
-        fromBox = new JComboBox<>(numUnits);
-        fromBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        nsFromBox = new JComboBox<>(numUnits);
+        nsFromBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
-        panel.add(fromBox, gbc);
+        panel.add(nsFromBox, gbc);
 
         // To label and dropdown
         JLabel toLabel = new JLabel("To:");
@@ -82,24 +93,25 @@ public class NumSysByMV implements ActionListener {
         gbc.gridx = 0;
         panel.add(toLabel, gbc);
 
-        toBox = new JComboBox<>(numUnits);
-        toBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        nsToBox = new JComboBox<>(numUnits);
+        nsToBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
-        panel.add(toBox, gbc);
+        panel.add(nsToBox, gbc);
 
         // Convert button
-        convertButton = new JButton("Convert");
+        JButton convertButton = new JButton("Convert");
         convertButton.setFont(new Font("Arial", Font.BOLD, 14));
         convertButton.setBackground(new Color(43, 43, 43));
         convertButton.setForeground(Color.WHITE);
         convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
-        convertButton.addActionListener(new NumSysByMV());
+        convertButton.setActionCommand("NumberSystem");
+        convertButton.addActionListener(this);
         gbc.gridy = 4;
         gbc.gridwidth = 2;
         panel.add(convertButton, gbc);
 
         // Answer field and label
-        answer = new JLabel("Answer:");
+        JLabel answer = new JLabel("Answer:");
         answer.setForeground(Color.WHITE);
         answer.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 5;
@@ -107,24 +119,24 @@ public class NumSysByMV implements ActionListener {
         gbc.gridx = 0;
         panel.add(answer, gbc);
 
-        userAnswer = new JTextField();
-        userAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
-        userAnswer.setEditable(false);
+        nsUserAnswer = new JTextField();
+        nsUserAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
+        nsUserAnswer.setEditable(false);
         gbc.gridx = 1;
-        panel.add(userAnswer, gbc);
+        panel.add(nsUserAnswer, gbc);
 
         return panel;
     }
 
-    // Creates the Weight panel
-    private static JPanel createWeightPanel() {
+    // Creates the Weight conversion panel
+    private JPanel createWeightPanel() {
+        // Similar to Number System Panel
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(60, 63, 65));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Input Label
         JLabel userLabel = new JLabel("Enter a Value:");
         userLabel.setForeground(Color.WHITE);
         userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -132,13 +144,11 @@ public class NumSysByMV implements ActionListener {
         gbc.gridy = 0;
         panel.add(userLabel, gbc);
 
-        // Input TextField
-        userText = new JTextField();
-        userText.setFont(new Font("Arial", Font.PLAIN, 14));
+        weightUserText = new JTextField();
+        weightUserText.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 1;
-        panel.add(userText, gbc);
+        panel.add(weightUserText, gbc);
 
-        // From label and dropdown
         JLabel fromLabel = new JLabel("From:");
         fromLabel.setForeground(Color.WHITE);
         fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -146,13 +156,12 @@ public class NumSysByMV implements ActionListener {
         gbc.gridx = 0;
         panel.add(fromLabel, gbc);
 
-        String[] weightTempUnits = {"Kg", "Lb"};
-        fromBox = new JComboBox<>(weightTempUnits);
-        fromBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        String[] weightUnits = {"Kg", "Lb"};
+        weightFromBox = new JComboBox<>(weightUnits);
+        weightFromBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
-        panel.add(fromBox, gbc);
+        panel.add(weightFromBox, gbc);
 
-        // To label and dropdown
         JLabel toLabel = new JLabel("To:");
         toLabel.setForeground(Color.WHITE);
         toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -160,24 +169,23 @@ public class NumSysByMV implements ActionListener {
         gbc.gridx = 0;
         panel.add(toLabel, gbc);
 
-        toBox = new JComboBox<>(weightTempUnits);
-        toBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        weightToBox = new JComboBox<>(weightUnits);
+        weightToBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
-        panel.add(toBox, gbc);
+        panel.add(weightToBox, gbc);
 
-        // Convert button
-        convertButton = new JButton("Convert");
+        JButton convertButton = new JButton("Convert");
         convertButton.setFont(new Font("Arial", Font.BOLD, 14));
         convertButton.setBackground(new Color(43, 43, 43));
         convertButton.setForeground(Color.WHITE);
         convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
-        convertButton.addActionListener(new NumSysByMV());
+        convertButton.setActionCommand("Weight");
+        convertButton.addActionListener(this);
         gbc.gridy = 4;
         gbc.gridwidth = 2;
         panel.add(convertButton, gbc);
 
-        // Answer field and label
-        answer = new JLabel("Answer:");
+        JLabel answer = new JLabel("Answer:");
         answer.setForeground(Color.WHITE);
         answer.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 5;
@@ -185,193 +193,206 @@ public class NumSysByMV implements ActionListener {
         gbc.gridx = 0;
         panel.add(answer, gbc);
 
-        userAnswer = new JTextField();
-        userAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
-        userAnswer.setEditable(false);
+        weightUserAnswer = new JTextField();
+        weightUserAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
+        weightUserAnswer.setEditable(false);
         gbc.gridx = 1;
-        panel.add(userAnswer, gbc);
+        panel.add(weightUserAnswer, gbc);
 
         return panel;
     }
 
-    private static JPanel createTemperaturePanel() {
-        JPanel panel = new JPanel(new GridBagLayout());
-        panel.setBackground(new Color(60, 63, 65));
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+// Creates the Temperature conversion panel
+private JPanel createTemperaturePanel() {
+    JPanel panel = new JPanel(new GridBagLayout());
+    panel.setBackground(new Color(60, 63, 65));
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(10, 10, 10, 10);
+    gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Input Label
-        JLabel userLabel = new JLabel("Enter a Value:");
-        userLabel.setForeground(Color.WHITE);
-        userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panel.add(userLabel, gbc);
+    // Input Label
+    JLabel userLabel = new JLabel("Enter a Value:");
+    userLabel.setForeground(Color.WHITE);
+    userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    panel.add(userLabel, gbc);
 
-        // Input TextField
-        userText = new JTextField();
-        userText.setFont(new Font("Arial", Font.PLAIN, 14));
-        gbc.gridy = 1;
-        panel.add(userText, gbc);
+    // Input TextField
+    tempUserText = new JTextField();
+    tempUserText.setFont(new Font("Arial", Font.PLAIN, 14));
+    gbc.gridy = 1;
+    panel.add(tempUserText, gbc);
 
-        // From label and dropdown
-        JLabel fromLabel = new JLabel("From:");
-        fromLabel.setForeground(Color.WHITE);
-        fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        gbc.gridy = 2;
-        gbc.gridx = 0;
-        panel.add(fromLabel, gbc);
+    // From Label
+    JLabel fromLabel = new JLabel("From:");
+    fromLabel.setForeground(Color.WHITE);
+    fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+    gbc.gridy = 2;
+    gbc.gridx = 0;
+    panel.add(fromLabel, gbc);
 
-        String[] weightTempUnits = {"Fahrenheit", "Celsius"};
-        fromBox = new JComboBox<>(weightTempUnits);
-        fromBox.setFont(new Font("Arial", Font.PLAIN, 14));
-        gbc.gridx = 1;
-        panel.add(fromBox, gbc);
+    // From ComboBox
+    String[] temperatureUnits = {"Celsius", "Fahrenheit"};
+    tempFromBox = new JComboBox<>(temperatureUnits);
+    tempFromBox.setFont(new Font("Arial", Font.PLAIN, 14));
+    gbc.gridx = 1;
+    panel.add(tempFromBox, gbc);
 
-        // To label and dropdown
-        JLabel toLabel = new JLabel("To:");
-        toLabel.setForeground(Color.WHITE);
-        toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        gbc.gridy = 3;
-        gbc.gridx = 0;
-        panel.add(toLabel, gbc);
+    // To Label
+    JLabel toLabel = new JLabel("To:");
+    toLabel.setForeground(Color.WHITE);
+    toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+    gbc.gridy = 3;
+    gbc.gridx = 0;
+    panel.add(toLabel, gbc);
 
-        toBox = new JComboBox<>(weightTempUnits);
-        toBox.setFont(new Font("Arial", Font.PLAIN, 14));
-        gbc.gridx = 1;
-        panel.add(toBox, gbc);
+    // To ComboBox
+    tempToBox = new JComboBox<>(temperatureUnits);
+    tempToBox.setFont(new Font("Arial", Font.PLAIN, 14));
+    gbc.gridx = 1;
+    panel.add(tempToBox, gbc);
 
-        // Convert button
-        convertButton = new JButton("Convert");
-        convertButton.setFont(new Font("Arial", Font.BOLD, 14));
-        convertButton.setBackground(new Color(43, 43, 43));
-        convertButton.setForeground(Color.WHITE);
-        convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
-        convertButton.addActionListener(new NumSysByMV());
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
-        panel.add(convertButton, gbc);
+    // Convert Button
+    JButton convertButton = new JButton("Convert");
+    convertButton.setFont(new Font("Arial", Font.BOLD, 14));
+    convertButton.setBackground(new Color(43, 43, 43));
+    convertButton.setForeground(Color.WHITE);
+    convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
+    convertButton.setActionCommand("Temperature"); // Identifies this button's action
+    convertButton.addActionListener(this); // Links to actionPerformed
+    gbc.gridy = 4;
+    gbc.gridwidth = 2;
+    panel.add(convertButton, gbc);
 
-        // Answer field and label
-        answer = new JLabel("Answer:");
-        answer.setForeground(Color.WHITE);
-        answer.setFont(new Font("Arial", Font.PLAIN, 14));
-        gbc.gridy = 5;
-        gbc.gridwidth = 1;
-        gbc.gridx = 0;
-        panel.add(answer, gbc);
+    // Answer Label
+    JLabel answer = new JLabel("Answer:");
+    answer.setForeground(Color.WHITE);
+    answer.setFont(new Font("Arial", Font.PLAIN, 14));
+    gbc.gridy = 5;
+    gbc.gridwidth = 1;
+    gbc.gridx = 0;
+    panel.add(answer, gbc);
 
-        userAnswer = new JTextField();
-        userAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
-        userAnswer.setEditable(false);
-        gbc.gridx = 1;
-        panel.add(userAnswer, gbc);
+    // Answer TextField
+    tempUserAnswer = new JTextField();
+    tempUserAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
+    tempUserAnswer.setEditable(false); // Output field should not be editable
+    gbc.gridx = 1;
+    panel.add(tempUserAnswer, gbc);
 
-        return panel;
-    }
+    return panel; // Return the fully constructed panel
+}
 
-    @Override
-public void actionPerformed(ActionEvent e) {
+@Override
+    public void actionPerformed(ActionEvent e) {
     try {
-        String input = userText.getText();
-        String fromUnit = (String) fromBox.getSelectedItem();
-        String toUnit = (String) toBox.getSelectedItem();
-
-        // Check for incompatible categories
-        boolean isNumberSystem = fromUnit.equals("Decimal") || fromUnit.equals("Binary") ||
-                                 fromUnit.equals("Hexadecimal") || fromUnit.equals("Octal");
-
-        boolean isWeightClass = fromUnit.equals("Kg") || fromUnit.equals("Lb");
-        boolean isTemperature = fromUnit.equals("Celsius") || fromUnit.equals("Fahrenheit");
-
-        if ((isNumberSystem && (toUnit.equals("Kg") || toUnit.equals("Lb") || toUnit.equals("Celsius") || toUnit.equals("Fahrenheit"))) ||
-        (isWeightClass && (toUnit.equals("Decimal") || toUnit.equals("Binary") || toUnit.equals("Hexadecimal") || toUnit.equals("Octal") || toUnit.equals("Celsius") || toUnit.equals("Fahrenheit"))) ||
-        (isTemperature && (toUnit.equals("Decimal") || toUnit.equals("Binary") || toUnit.equals("Hexadecimal") || toUnit.equals("Octal") || toUnit.equals("Kg") || toUnit.equals("Lb")))) {
-        userAnswer.setText("Invalid Conversion");
-        JOptionPane.showMessageDialog(null, 
-        "Invalid Conversion", 
-        "Invalid Conversion", 
-        JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-
+        String actionCommand = e.getActionCommand(); // Identify the source tab
+        String input;
+        String fromUnit;
+        String toUnit;
         String result = "";
+        
+        switch (actionCommand) {
+        case "NumberSystem" -> {
+        // Get values from the Number System tab
+        input = nsUserText.getText().trim();
+        fromUnit = (String) nsFromBox.getSelectedItem();
+        toUnit = (String) nsToBox.getSelectedItem();
 
-        // Conversion logic
-
-        if (fromUnit.equals("Celsius")) {
-            double celsius = Double.parseDouble(input);
-            if (toUnit.equals("Fahrenheit")) {
-                result = String.format("%.2f", (celsius * 9 / 5) + 32) + " °F";
-            } else if (toUnit.equals("Celsius")) {
-                result = input + " °C"; // No conversion
-            }
-        } else if (fromUnit.equals("Fahrenheit")) {
-            double fahrenheit = Double.parseDouble(input);
-            if (toUnit.equals("Celsius")) {
-                result = String.format("%.2f", (fahrenheit - 32) * 5 / 9) + " °C";
-            } else if (toUnit.equals("Fahrenheit")) {
-                result = input + " °F"; // No conversion
-            }
+        if (input.isEmpty()) {
+            throw new IllegalArgumentException("Input cannot be empty.");
         }
 
-        if (fromUnit.equals("Decimal")) {
-            int decimal = Integer.parseInt(input);
-            if (toUnit.equals("Binary")) {
-                result = Integer.toBinaryString(decimal);
-            } else if (toUnit.equals("Hexadecimal")) {
-                result = Integer.toHexString(decimal).toUpperCase();
-            } else if (toUnit.equals("Octal")) {
-                result = Integer.toOctalString(decimal);
-            } else if (toUnit.equals("Decimal")) {
-                result = input; // No conversion
-            }
-        } else if (fromUnit.equals("Binary")) {
-            int binary = Integer.parseInt(input, 2);
-            if (toUnit.equals("Decimal")) {
-                result = String.valueOf(binary);
-            } else if (toUnit.equals("Octal")) {
-                result = Integer.toOctalString(binary);
-            } else if (toUnit.equals("Hexadecimal")) {
-                result = Integer.toHexString(binary).toUpperCase();
-            } else if (toUnit.equals("Binary")) {
-                result = input; // No conversion
-            }
-        } else if (fromUnit.equals("Kg")) {
-            double kilograms = Double.parseDouble(input);
-            if (toUnit.equals("Lb")) {
-                result = String.format("%.2f", kilograms * 2.20462) + " pounds";
-            } else if (toUnit.equals("Kg")) {
-                result = input + " kilograms"; // No conversion
-            }
-        } else if (fromUnit.equals("Lb")) {
-            double pounds = Double.parseDouble(input);
-            if (toUnit.equals("Kg")) {
-                result = String.format("%.2f", pounds / 2.20462) + " kilograms";
-            } else if (toUnit.equals("Lb")) {
-                result = input + " pounds"; // No conversion
-            }
+        // Parse input and perform the conversion
+        int value = switch (fromUnit) {
+            case "Decimal" -> Integer.parseInt(input);
+            case "Binary" -> Integer.parseInt(input, 2);
+            case "Hexadecimal" -> Integer.parseInt(input, 16);
+            case "Octal" -> Integer.parseInt(input, 8);
+            default -> throw new IllegalArgumentException("Invalid Number System.");
+        };
+
+        result = switch (toUnit) {
+            case "Decimal" -> String.valueOf(value);
+            case "Binary" -> Integer.toBinaryString(value);
+            case "Hexadecimal" -> Integer.toHexString(value).toUpperCase();
+            case "Octal" -> Integer.toOctalString(value);
+            default -> throw new IllegalArgumentException("Invalid Number System.");
+        };
+
+        nsUserAnswer.setText(result);
+    }case "Weight" -> {
+        // Get values from the Weight tab
+        input = weightUserText.getText().trim();
+        fromUnit = (String) weightFromBox.getSelectedItem();
+        toUnit = (String) weightToBox.getSelectedItem();
+
+        if (input.isEmpty()) {
+            throw new IllegalArgumentException("Input cannot be empty.");
         }
 
-        userAnswer.setText(result);
+        double weight = Double.parseDouble(input); // Parse as a double
+        if (fromUnit.equals("Kg") && toUnit.equals("Lb")) {
+            result = String.format("%.2f", weight * 2.20462) + " pounds";
+        } else if (fromUnit.equals("Lb") && toUnit.equals("Kg")) {
+            result = String.format("%.2f", weight / 2.20462) + " kilograms";
+        } else if (fromUnit.equals(toUnit)) {
+            result = input + (fromUnit.equals("Kg") ? " kilograms" : " pounds");
+        } else {
+            throw new IllegalArgumentException("Invalid Weight Conversion.");
+        }
 
-        // usage count
-        usageCount++;
+        weightUserAnswer.setText(result);
+    }case "Temperature" -> {
+        // Get values from the Temperature tab
+        input = tempUserText.getText().trim();
+        fromUnit = (String) tempFromBox.getSelectedItem();
+        toUnit = (String) tempToBox.getSelectedItem();
+
+        if (input.isEmpty()) {
+            throw new IllegalArgumentException("Input cannot be empty.");
+        }
+
+        double temp = Double.parseDouble(input); // Parse as a double
+        if (fromUnit.equals("Celsius") && toUnit.equals("Fahrenheit")) {
+            result = String.format("%.2f", (temp * 9 / 5) + 32) + " °F";
+        } else if (fromUnit.equals("Fahrenheit") && toUnit.equals("Celsius")) {
+            result = String.format("%.2f", (temp - 32) * 5 / 9) + " °C";
+        } else if (fromUnit.equals(toUnit)) {
+            result = input + (fromUnit.equals("Celsius") ? " °C" : " °F");
+        } else {
+            throw new IllegalArgumentException("Invalid Temperature Conversion.");
+        }
+
+        tempUserAnswer.setText(result);
+    }default -> throw new IllegalArgumentException("Unknown action command.");
+}
+        
+            // Increment usage count
+            usageCount++;
         if (usageCount == 100) {
             JOptionPane.showMessageDialog(null,
-                    "Congratulations! You've used the program 100 times!",
-                    "Milestone Achieved",
+                        "Congratulations! You've used the program 100 times!",
+                        "Milestone Achieved",
                     JOptionPane.INFORMATION_MESSAGE);
-        }
+    }
 
-    } catch (NumberFormatException ex) {
-        userAnswer.setText("Invalid Input");
-        JOptionPane.showMessageDialog(null, 
-            "Please enter a valid numeric value.", 
-            "Invalid Input", 
-            JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(null,
+                    "Please enter a valid numeric value.",
+                    "Invalid Input",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException ex) {
+        JOptionPane.showMessageDialog(null,
+                    ex.getMessage(),
+                    "Conversion Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null,
+                    "An unexpected error occurred.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
 }
