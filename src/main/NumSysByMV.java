@@ -49,7 +49,7 @@ public class NumSysByMV implements ActionListener {
         frame.setVisible(true);
     }
 
-    // Creates the Number System conversion panel
+    // Number System conversion panel
     private JPanel createNumberSystemPanel() {
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(60, 63, 65));
@@ -128,7 +128,7 @@ public class NumSysByMV implements ActionListener {
         return panel;
     }
 
-    // Creates the Weight conversion panel
+    // Weight conversion panel
     private JPanel createWeightPanel() {
         // Similar to Number System Panel
         JPanel panel = new JPanel(new GridBagLayout());
@@ -137,6 +137,8 @@ public class NumSysByMV implements ActionListener {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+
+        // Input Label
         JLabel userLabel = new JLabel("Enter a Value:");
         userLabel.setForeground(Color.WHITE);
         userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -144,11 +146,14 @@ public class NumSysByMV implements ActionListener {
         gbc.gridy = 0;
         panel.add(userLabel, gbc);
 
+        // Input TextField
         weightUserText = new JTextField();
         weightUserText.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 1;
         panel.add(weightUserText, gbc);
 
+
+        // From label and dropdown
         JLabel fromLabel = new JLabel("From:");
         fromLabel.setForeground(Color.WHITE);
         fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -162,6 +167,8 @@ public class NumSysByMV implements ActionListener {
         gbc.gridx = 1;
         panel.add(weightFromBox, gbc);
 
+
+        // To label and dropdown
         JLabel toLabel = new JLabel("To:");
         toLabel.setForeground(Color.WHITE);
         toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -174,6 +181,7 @@ public class NumSysByMV implements ActionListener {
         gbc.gridx = 1;
         panel.add(weightToBox, gbc);
 
+        // Convert button
         JButton convertButton = new JButton("Convert");
         convertButton.setFont(new Font("Arial", Font.BOLD, 14));
         convertButton.setBackground(new Color(43, 43, 43));
@@ -185,6 +193,7 @@ public class NumSysByMV implements ActionListener {
         gbc.gridwidth = 2;
         panel.add(convertButton, gbc);
 
+        // Answer field and label
         JLabel answer = new JLabel("Answer:");
         answer.setForeground(Color.WHITE);
         answer.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -202,7 +211,7 @@ public class NumSysByMV implements ActionListener {
         return panel;
     }
 
-// Creates the Temperature conversion panel
+// Temperature conversion panel
 private JPanel createTemperaturePanel() {
     JPanel panel = new JPanel(new GridBagLayout());
     panel.setBackground(new Color(60, 63, 65));
