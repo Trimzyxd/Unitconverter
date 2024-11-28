@@ -51,7 +51,7 @@ public class NumSysByMV implements ActionListener {
 
         // Dropdown menus for conversion options
         String[] units = {
-            "Decimal", "Binary", "Hexadecimal", "Octal", "Kg", "Lb"
+            "Decimal", "Binary", "Hexadecimal", "Octal", "Kg", "Lb", "Celsius", "Fahrenheit"
         };
 
         // From label
@@ -139,24 +139,40 @@ public void actionPerformed(ActionEvent e) {
                                  fromUnit.equals("Hexadecimal") || fromUnit.equals("Octal");
 
         boolean isWeightClass = fromUnit.equals("Kg") || fromUnit.equals("Lb");
+        boolean isTemperature = fromUnit.equals("Celsius") || fromUnit.equals("Fahrenheit");
 
-        if ((isNumberSystem && toUnit.equals("Kg")) || 
-            (isNumberSystem && toUnit.equals("Lb")) || 
-            (isWeightClass && toUnit.equals("Decimal")) || 
-            (isWeightClass && toUnit.equals("Binary")) || 
-            (isWeightClass && toUnit.equals("Hexadecimal")) || 
-            (isWeightClass && toUnit.equals("Octal"))) {
-            userAnswer.setText("Invalid Conversion");
-            JOptionPane.showMessageDialog(null, 
-                "Invalid Conversion", 
-                "Invalid Conversion", 
-                JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        if ((isNumberSystem && (toUnit.equals("Kg") || toUnit.equals("Lb") || toUnit.equals("Celsius") || toUnit.equals("Fahrenheit"))) ||
+        (isWeightClass && (toUnit.equals("Decimal") || toUnit.equals("Binary") || toUnit.equals("Hexadecimal") || toUnit.equals("Octal") || toUnit.equals("Celsius") || toUnit.equals("Fahrenheit"))) ||
+        (isTemperature && (toUnit.equals("Decimal") || toUnit.equals("Binary") || toUnit.equals("Hexadecimal") || toUnit.equals("Octal") || toUnit.equals("Kg") || toUnit.equals("Lb")))) {
+        userAnswer.setText("Invalid Conversion");
+        JOptionPane.showMessageDialog(null, 
+        "Invalid Conversion", 
+        "Invalid Conversion", 
+        JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
 
         String result = "";
 
         // Conversion logic
+
+        if (fromUnit.equals("Celsius")) {
+            double celsius = Double.parseDouble(input);
+            if (toUnit.equals("Fahrenheit")) {
+                result = String.format("%.2f", (celsius * 9 / 5) + 32) + " °F";
+            } else if (toUnit.equals("Celsius")) {
+                result = input + " °C"; // No conversion
+            }
+        } else if (fromUnit.equals("Fahrenheit")) {
+            double fahrenheit = Double.parseDouble(input);
+            if (toUnit.equals("Celsius")) {
+                result = String.format("%.2f", (fahrenheit - 32) * 5 / 9) + " °C";
+            } else if (toUnit.equals("Fahrenheit")) {
+                result = input + " °F"; // No conversion
+            }
+        }
+
         if (fromUnit.equals("Decimal")) {
             int decimal = Integer.parseInt(input);
             if (toUnit.equals("Binary")) {
@@ -215,5 +231,3 @@ public void actionPerformed(ActionEvent e) {
         }
     }
 }
-
-//test
