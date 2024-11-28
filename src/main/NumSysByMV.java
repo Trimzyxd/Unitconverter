@@ -20,68 +20,72 @@ public class NumSysByMV implements ActionListener {
         // Main frame
         JFrame frame = new JFrame("Unit Converter - Group 6");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 500);
+        frame.setSize(500, 400);
 
-        // Main panel
-        JPanel panel = new JPanel();
+        // Tabbed Pane
+        JTabbedPane tabbedPane = new JTabbedPane();
+
+        // Add panels for each tab
+        tabbedPane.addTab("Number System", createNumberSystemPanel());
+        tabbedPane.addTab("Weight", createWeightPanel());
+        tabbedPane.addTab("Temperature", createTemperaturePanel());
+
+        // Add tabbed pane to the frame
+        frame.add(tabbedPane);
+
+        // Center frame
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    // Creates the Number System conversion panel
+    private static JPanel createNumberSystemPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(new Color(60, 63, 65));
-        panel.setLayout(new GridBagLayout());
-        frame.add(panel);
-
-        // GridBagLayout constraints
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Input Label
-        userLabel = new JLabel("Enter a Value:");
+        JLabel userLabel = new JLabel("Enter a Value:");
         userLabel.setForeground(Color.WHITE);
         userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 2;
         panel.add(userLabel, gbc);
 
         // Input TextField
         userText = new JTextField();
         userText.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 1;
-        gbc.gridwidth = 2;
         panel.add(userText, gbc);
 
-        // Dropdown menus for conversion options
-        String[] units = {
-            "Decimal", "Binary", "Hexadecimal", "Octal", "Kg", "Lb", "Celsius", "Fahrenheit"
-        };
-
-        // From label
+        // From label and dropdown
         JLabel fromLabel = new JLabel("From:");
-        fromLabel.setForeground(Color.WHITE); // Set font color to white
+        fromLabel.setForeground(Color.WHITE);
         fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 2;
         gbc.gridx = 0;
         panel.add(fromLabel, gbc);
 
-        // From dropdown
-        fromBox = new JComboBox<>(units);
+        String[] numUnits = {"Decimal", "Binary", "Hexadecimal", "Octal"};
+        fromBox = new JComboBox<>(numUnits);
         fromBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
         panel.add(fromBox, gbc);
 
-        // To label
+        // To label and dropdown
         JLabel toLabel = new JLabel("To:");
-        toLabel.setForeground(Color.WHITE); // Set font color to white
+        toLabel.setForeground(Color.WHITE);
         toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 3;
         gbc.gridx = 0;
         panel.add(toLabel, gbc);
 
-        // To dropdown
-        toBox = new JComboBox<>(units);
+        toBox = new JComboBox<>(numUnits);
         toBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
         panel.add(toBox, gbc);
-
 
         // Convert button
         convertButton = new JButton("Convert");
@@ -109,22 +113,162 @@ public class NumSysByMV implements ActionListener {
         gbc.gridx = 1;
         panel.add(userAnswer, gbc);
 
-        // Usage label
-        JLabel usageLabel = new JLabel("Program Used: 0 times");
-        usageLabel.setForeground(Color.WHITE);
-        usageLabel.setFont(new Font("Arial", Font.ITALIC, 12));
-        gbc.gridy = 6;
+        return panel;
+    }
+
+    // Creates the Weight panel
+    private static JPanel createWeightPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(60, 63, 65));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Input Label
+        JLabel userLabel = new JLabel("Enter a Value:");
+        userLabel.setForeground(Color.WHITE);
+        userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(userLabel, gbc);
+
+        // Input TextField
+        userText = new JTextField();
+        userText.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 1;
+        panel.add(userText, gbc);
+
+        // From label and dropdown
+        JLabel fromLabel = new JLabel("From:");
+        fromLabel.setForeground(Color.WHITE);
+        fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        panel.add(fromLabel, gbc);
+
+        String[] weightTempUnits = {"Kg", "Lb"};
+        fromBox = new JComboBox<>(weightTempUnits);
+        fromBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(fromBox, gbc);
+
+        // To label and dropdown
+        JLabel toLabel = new JLabel("To:");
+        toLabel.setForeground(Color.WHITE);
+        toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        panel.add(toLabel, gbc);
+
+        toBox = new JComboBox<>(weightTempUnits);
+        toBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(toBox, gbc);
+
+        // Convert button
+        convertButton = new JButton("Convert");
+        convertButton.setFont(new Font("Arial", Font.BOLD, 14));
+        convertButton.setBackground(new Color(43, 43, 43));
+        convertButton.setForeground(Color.WHITE);
+        convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
+        convertButton.addActionListener(new NumSysByMV());
+        gbc.gridy = 4;
         gbc.gridwidth = 2;
-        panel.add(usageLabel, gbc);
+        panel.add(convertButton, gbc);
 
-        // usage count updating
-        Timer timer = new Timer(500, e -> usageLabel.setText("Program Used: " + usageCount + " times"));
-        timer.start();
+        // Answer field and label
+        answer = new JLabel("Answer:");
+        answer.setForeground(Color.WHITE);
+        answer.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 5;
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        panel.add(answer, gbc);
 
-        // Center frame
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        userAnswer = new JTextField();
+        userAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
+        userAnswer.setEditable(false);
+        gbc.gridx = 1;
+        panel.add(userAnswer, gbc);
+
+        return panel;
+    }
+
+    private static JPanel createTemperaturePanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(60, 63, 65));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Input Label
+        JLabel userLabel = new JLabel("Enter a Value:");
+        userLabel.setForeground(Color.WHITE);
+        userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(userLabel, gbc);
+
+        // Input TextField
+        userText = new JTextField();
+        userText.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 1;
+        panel.add(userText, gbc);
+
+        // From label and dropdown
+        JLabel fromLabel = new JLabel("From:");
+        fromLabel.setForeground(Color.WHITE);
+        fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        panel.add(fromLabel, gbc);
+
+        String[] weightTempUnits = {"Fahrenheit", "Celsius"};
+        fromBox = new JComboBox<>(weightTempUnits);
+        fromBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(fromBox, gbc);
+
+        // To label and dropdown
+        JLabel toLabel = new JLabel("To:");
+        toLabel.setForeground(Color.WHITE);
+        toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        panel.add(toLabel, gbc);
+
+        toBox = new JComboBox<>(weightTempUnits);
+        toBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(toBox, gbc);
+
+        // Convert button
+        convertButton = new JButton("Convert");
+        convertButton.setFont(new Font("Arial", Font.BOLD, 14));
+        convertButton.setBackground(new Color(43, 43, 43));
+        convertButton.setForeground(Color.WHITE);
+        convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
+        convertButton.addActionListener(new NumSysByMV());
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        panel.add(convertButton, gbc);
+
+        // Answer field and label
+        answer = new JLabel("Answer:");
+        answer.setForeground(Color.WHITE);
+        answer.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 5;
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        panel.add(answer, gbc);
+
+        userAnswer = new JTextField();
+        userAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
+        userAnswer.setEditable(false);
+        gbc.gridx = 1;
+        panel.add(userAnswer, gbc);
+
+        return panel;
     }
 
     @Override
