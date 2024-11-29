@@ -31,7 +31,8 @@ public class NumSysByMV implements ActionListener {
     private JTextField timeUserText;
     private JComboBox<String> timeFromBox, timeToBox;
     private JTextField timeUserAnswer;
-
+    
+    private JLabel usageCounterLabel; // Label to display the usage counter
     private static int usageCount = 0; // Counter for session usage
 
     public static void main(String[] args) {
@@ -39,23 +40,29 @@ public class NumSysByMV implements ActionListener {
         JFrame frame = new JFrame("Unit Converter - Group 6");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 400);
-
+        frame.setLayout(new BorderLayout()); // Use BorderLayout
+    
         // Tabbed Pane
         JTabbedPane tabbedPane = new JTabbedPane();
-
+    
         // Instance of this class for handling actions
         NumSysByMV converter = new NumSysByMV();
-
+    
         // Add panels for each tab
         tabbedPane.addTab("Number System", converter.createNumberSystemPanel());
         tabbedPane.addTab("Weight", converter.createWeightPanel());
         tabbedPane.addTab("Temperature", converter.createTemperaturePanel());
         tabbedPane.addTab("Length", converter.createLengthPanel());
         tabbedPane.addTab("Time", converter.createTimePanel());
-
+    
         // Add tabbed pane to the frame
-        frame.add(tabbedPane);
-
+        frame.add(tabbedPane, BorderLayout.CENTER);
+    
+        // Initialize and add the usage counter label
+        converter.usageCounterLabel = new JLabel("Usage Count: 0");
+        converter.usageCounterLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        frame.add(converter.usageCounterLabel, BorderLayout.SOUTH); // Place it at the bottom
+    
         // Center frame
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -700,14 +707,15 @@ public class NumSysByMV implements ActionListener {
 
     
 
-        // Increment usage count
-        usageCount++;
-        if (usageCount == 100) {
-            JOptionPane.showMessageDialog(null,
-                    "Congratulations! You've used the program 100 times!",
-                    "Milestone Achieved",
-                    JOptionPane.INFORMATION_MESSAGE);
-        }
+    // Increment usage count and update the label
+    usageCount++;
+    usageCounterLabel.setText("Usage Count: " + usageCount);
+    if (usageCount == 100) {
+        JOptionPane.showMessageDialog(null,
+                "Congratulations! You've used the program 100 times!",
+                "Milestone Achieved",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
 
     } catch (NumberFormatException ex) {
         JOptionPane.showMessageDialog(null,
