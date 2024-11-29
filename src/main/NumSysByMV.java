@@ -23,9 +23,14 @@ public class NumSysByMV implements ActionListener {
     private JTextField tempUserAnswer;
 
     // Components for Length Tab
-    private JTextField lenghtUserText;
-    private JComboBox<String> lenghtFromBox, lenghtToBox;
-    private JTextField lenghtUserAnswer;
+    private JTextField lengthUserText;
+    private JComboBox<String> lengthFromBox, lengthToBox;
+    private JTextField lengthUserAnswer;
+
+    // Components for Time Tab
+    private JTextField timeUserText;
+    private JComboBox<String> timeFromBox, timeToBox;
+    private JTextField timeUserAnswer;
 
     private static int usageCount = 0; // Counter for session usage
 
@@ -46,6 +51,7 @@ public class NumSysByMV implements ActionListener {
         tabbedPane.addTab("Weight", converter.createWeightPanel());
         tabbedPane.addTab("Temperature", converter.createTemperaturePanel());
         tabbedPane.addTab("Length", converter.createLengthPanel());
+        tabbedPane.addTab("Time", converter.createTimePanel());
 
         // Add tabbed pane to the frame
         frame.add(tabbedPane);
@@ -167,7 +173,7 @@ public class NumSysByMV implements ActionListener {
         gbc.gridx = 0;
         panel.add(fromLabel, gbc);
 
-        String[] weightUnits = {"Kg", "Lb"};
+        String[] weightUnits = {"Kilogram", "Pound", "Gram", "Milligram"};
         weightFromBox = new JComboBox<>(weightUnits);
         weightFromBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
@@ -316,10 +322,10 @@ public class NumSysByMV implements ActionListener {
         panel.add(userLabel, gbc);
     
         // Input TextField
-        lenghtUserText = new JTextField();
-        lenghtUserText.setFont(new Font("Arial", Font.PLAIN, 14));
+        lengthUserText = new JTextField();
+        lengthUserText.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridy = 1;
-        panel.add(lenghtUserText, gbc);
+        panel.add(lengthUserText, gbc);
     
         // From Label
         JLabel fromLabel = new JLabel("From:");
@@ -330,10 +336,10 @@ public class NumSysByMV implements ActionListener {
         panel.add(fromLabel, gbc);
     
         // From ComboBox
-        lenghtFromBox = new JComboBox<>(new String[]{"Meter", "Kilometer", "Centimeter", "Mile", "Yard", "Foot", "Inch"});
-        lenghtFromBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        lengthFromBox = new JComboBox<>(new String[]{"Meter", "Kilometer", "Centimeter", "Mile", "Yard", "Foot", "Inch"});
+        lengthFromBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
-        panel.add(lenghtFromBox, gbc);
+        panel.add(lengthFromBox, gbc);
     
         // To Label
         JLabel toLabel = new JLabel("To:");
@@ -344,10 +350,10 @@ public class NumSysByMV implements ActionListener {
         panel.add(toLabel, gbc);
     
         // To ComboBox
-        lenghtToBox = new JComboBox<>(new String[]{"Meter", "Kilometer", "Centimeter", "Mile", "Yard", "Foot", "Inch"});
-        lenghtToBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        lengthToBox = new JComboBox<>(new String[]{"Meter", "Kilometer", "Centimeter", "Mile", "Yard", "Foot", "Inch"});
+        lengthToBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
-        panel.add(lenghtToBox, gbc);
+        panel.add(lengthToBox, gbc);
     
         // Convert Button
         JButton convertButton = new JButton("Convert");
@@ -371,15 +377,95 @@ public class NumSysByMV implements ActionListener {
         panel.add(answer, gbc);
     
         // Answer TextField
-        lenghtUserAnswer = new JTextField();
-        lenghtUserAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
-        lenghtUserAnswer.setEditable(false);
+        lengthUserAnswer = new JTextField();
+        lengthUserAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
+        lengthUserAnswer.setEditable(false);
         gbc.gridx = 1;
-        panel.add(lenghtUserAnswer, gbc);
+        panel.add(lengthUserAnswer, gbc);
     
         return panel;
     }
     
+    // Time conversion panel
+    private JPanel createTimePanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(60, 63, 65));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+    
+        // Input Label
+        JLabel userLabel = new JLabel("Enter a Value:");
+        userLabel.setForeground(Color.WHITE);
+        userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(userLabel, gbc);
+    
+        // Input TextField
+        timeUserText = new JTextField();
+        timeUserText.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 1;
+        panel.add(timeUserText, gbc);
+    
+        // From Label
+        JLabel fromLabel = new JLabel("From:");
+        fromLabel.setForeground(Color.WHITE);
+        fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        panel.add(fromLabel, gbc);
+    
+        // From ComboBox
+        timeFromBox = new JComboBox<>(new String[]{"Second", "Millisecond", "Minute", "Hour", "Day", "Week", "Month", "Year"});
+        timeFromBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(timeFromBox, gbc);
+    
+        // To Label
+        JLabel toLabel = new JLabel("To:");
+        toLabel.setForeground(Color.WHITE);
+        toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        panel.add(toLabel, gbc);
+    
+        // To ComboBox
+        timeToBox = new JComboBox<>(new String[]{"Second", "Millisecond", "Minute", "Hour", "Day", "Week", "Month", "Year"});
+        timeToBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(timeToBox, gbc);
+    
+        // Convert Button
+        JButton convertButton = new JButton("Convert");
+        convertButton.setFont(new Font("Arial", Font.BOLD, 14));
+        convertButton.setBackground(new Color(43, 43, 43));
+        convertButton.setForeground(Color.WHITE);
+        convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
+        convertButton.setActionCommand("Time");
+        convertButton.addActionListener(this);
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        panel.add(convertButton, gbc);
+    
+        // Answer Label
+        JLabel answer = new JLabel("Answer:");
+        answer.setForeground(Color.WHITE);
+        answer.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 5;
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        panel.add(answer, gbc);
+    
+        // Answer TextField
+        timeUserAnswer = new JTextField();
+        timeUserAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
+        timeUserAnswer.setEditable(false);
+        gbc.gridx = 1;
+        panel.add(timeUserAnswer, gbc);
+    
+        return panel;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -425,24 +511,59 @@ public class NumSysByMV implements ActionListener {
             input = weightUserText.getText().trim();
             fromUnit = (String) weightFromBox.getSelectedItem();
             toUnit = (String) weightToBox.getSelectedItem();
-
+        
             if (input.isEmpty()) {
                 throw new IllegalArgumentException("Input cannot be empty.");
             }
-
+        
             double weight = Double.parseDouble(input); // Parse as a double
-            if (fromUnit.equals("Kg") && toUnit.equals("Lb")) {
-                result = String.format("%.2f", weight * 2.20462) + " pounds";
-            } else if (fromUnit.equals("Lb") && toUnit.equals("Kg")) {
-                result = String.format("%.2f", weight / 2.20462) + " kilograms";
-            } else if (fromUnit.equals(toUnit)) {
-                result = input + (fromUnit.equals("Kg") ? " kilograms" : " pounds");
+        
+            if (fromUnit.equals("Kilogram")) {
+                if (toUnit.equals("Pound")) {
+                    result = String.format("%.2f", weight * 2.20462) + " pounds";
+                } else if (toUnit.equals("Gram")) {
+                    result = String.format("%.2f", weight * 1000) + " grams";
+                } else if (toUnit.equals("Milligram")) {
+                    result = String.format("%.2f", weight * 1_000_000) + " milligrams";
+                } else if (toUnit.equals("Kilogram")) {
+                    result = input + " kilograms";
+                }
+            } else if (fromUnit.equals("Pound")) {
+                if (toUnit.equals("Kilogram")) {
+                    result = String.format("%.2f", weight / 2.20462) + " kilograms";
+                } else if (toUnit.equals("Gram")) {
+                    result = String.format("%.2f", (weight / 2.20462) * 1000) + " grams";
+                } else if (toUnit.equals("Milligram")) {
+                    result = String.format("%.2f", (weight / 2.20462) * 1_000_000) + " milligrams";
+                } else if (toUnit.equals("Pound")) {
+                    result = input + " pounds";
+                }
+            } else if (fromUnit.equals("Gram")) {
+                if (toUnit.equals("Kilogram")) {
+                    result = String.format("%.2f", weight / 1000) + " kilograms";
+                } else if (toUnit.equals("Milligram")) {
+                    result = String.format("%.2f", weight * 1000) + " milligrams";
+                } else if (toUnit.equals("Pound")) {
+                    result = String.format("%.2f", (weight / 1000) * 2.20462) + " pounds";
+                } else if (toUnit.equals("Gram")) {
+                    result = input + " grams";
+                }
+            } else if (fromUnit.equals("Milligram")) {
+                if (toUnit.equals("Kilogram")) {
+                    result = String.format("%.2f", weight / 1_000_000) + " kilograms";
+                } else if (toUnit.equals("Gram")) {
+                    result = String.format("%.2f", weight / 1000) + " grams";
+                } else if (toUnit.equals("Pound")) {
+                    result = String.format("%.2f", (weight / 1_000_000) * 2.20462) + " pounds";
+                } else if (toUnit.equals("Milligram")) {
+                    result = input + " milligrams";
+                }
             } else {
                 throw new IllegalArgumentException("Invalid Weight Conversion.");
             }
-
+        
             weightUserAnswer.setText(result);
-            }
+            }            
             case "Temperature" -> {
             // Get values from the Temperature tab
             input = tempUserText.getText().trim();
@@ -478,9 +599,9 @@ public class NumSysByMV implements ActionListener {
         }
             case "Length" -> {
             // Get values from the Length tab
-            input = lenghtUserText.getText().trim();
-            fromUnit = (String) lenghtFromBox.getSelectedItem();
-            toUnit = (String) lenghtToBox.getSelectedItem();
+            input = lengthUserText.getText().trim();
+            fromUnit = (String) lengthFromBox.getSelectedItem();
+            toUnit = (String) lengthToBox.getSelectedItem();
 
             if (input.isEmpty()) {
                 throw new IllegalArgumentException("Input cannot be empty.");
@@ -518,14 +639,66 @@ public class NumSysByMV implements ActionListener {
                 result = String.format("%.4f", convertedLength) + " " + toUnit;
 
                 // Display the result
-                lenghtUserAnswer.setText(result);
+                lengthUserAnswer.setText(result);
 
             } catch (NumberFormatException ex) {
                 throw new IllegalArgumentException("Please enter a valid numeric value.");
             }
         }
-        default -> throw new IllegalArgumentException("Unknown action command.");
-    }
+            default -> throw new IllegalArgumentException("Unknown action command.");
+       case "Time" -> {
+        // Get values from the Time tab
+        input = timeUserText.getText().trim();
+        fromUnit = (String) timeFromBox.getSelectedItem();
+        toUnit = (String) timeToBox.getSelectedItem();
+    
+        if (input.isEmpty()) {
+            throw new IllegalArgumentException("Input cannot be empty.");
+        }
+    
+        try {
+            double time = Double.parseDouble(input); // Parse input as double
+    
+            // Conversion rates to seconds
+            double toSeconds = switch (fromUnit) {
+                case "Millisecond" -> 0.001;
+                case "Second" -> 1.0;
+                case "Minute" -> 60.0;
+                case "Hour" -> 3600.0;
+                case "Day" -> 86400.0;
+                case "Week" -> 604800.0;
+                case "Month" -> 2592000.0; // Approximation (30 days)
+                case "Year" -> 31536000.0; // Approximation (365 days)
+                default -> throw new IllegalArgumentException("Invalid Time Unit.");
+            };
+    
+            // Conversion rates from seconds
+            double fromSeconds = switch (toUnit) {
+                case "Millisecond" -> 1000.0;
+                case "Second" -> 1.0;
+                case "Minute" -> 1.0 / 60.0;
+                case "Hour" -> 1.0 / 3600.0;
+                case "Day" -> 1.0 / 86400.0;
+                case "Week" -> 1.0 / 604800.0;
+                case "Month" -> 1.0 / 2592000.0; // Approximation (30 days)
+                case "Year" -> 1.0 / 31536000.0; // Approximation (365 days)
+                default -> throw new IllegalArgumentException("Invalid Time Unit.");
+            };
+    
+            // Perform the conversion
+            double convertedTime = time * toSeconds * fromSeconds;
+            result = String.format("%.4f", convertedTime) + " " + toUnit;
+    
+            // Display the result
+            timeUserAnswer.setText(result);
+    
+        } catch (NumberFormatException ex) {
+            throw new IllegalArgumentException("Please enter a valid numeric value.");
+        }
+    }    
+}
+
+    
 
         // Increment usage count
         usageCount++;
@@ -553,4 +726,5 @@ public class NumSysByMV implements ActionListener {
                 JOptionPane.ERROR_MESSAGE);
     }
 }
+
 }    
