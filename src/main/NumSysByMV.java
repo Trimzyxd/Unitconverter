@@ -22,6 +22,11 @@ public class NumSysByMV implements ActionListener {
     private JComboBox<String> tempFromBox, tempToBox;
     private JTextField tempUserAnswer;
 
+    // Components for Length Tab
+    private JTextField lenghtUserText;
+    private JComboBox<String> lenghtFromBox, lenghtToBox;
+    private JTextField lenghtUserAnswer;
+
     private static int usageCount = 0; // Counter for session usage
 
     public static void main(String[] args) {
@@ -40,6 +45,7 @@ public class NumSysByMV implements ActionListener {
         tabbedPane.addTab("Number System", converter.createNumberSystemPanel());
         tabbedPane.addTab("Weight", converter.createWeightPanel());
         tabbedPane.addTab("Temperature", converter.createTemperaturePanel());
+        tabbedPane.addTab("Length", converter.createLengthPanel());
 
         // Add tabbed pane to the frame
         frame.add(tabbedPane);
@@ -211,89 +217,171 @@ public class NumSysByMV implements ActionListener {
         return panel;
     }
 
-// Temperature conversion panel
-private JPanel createTemperaturePanel() {
-    JPanel panel = new JPanel(new GridBagLayout());
-    panel.setBackground(new Color(60, 63, 65));
-    GridBagConstraints gbc = new GridBagConstraints();
-    gbc.insets = new Insets(10, 10, 10, 10);
-    gbc.fill = GridBagConstraints.HORIZONTAL;
+    // Temperature conversion panel
+    private JPanel createTemperaturePanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(60, 63, 65));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-    // Input Label
-    JLabel userLabel = new JLabel("Enter a Value:");
-    userLabel.setForeground(Color.WHITE);
-    userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-    gbc.gridx = 0;
-    gbc.gridy = 0;
-    panel.add(userLabel, gbc);
+        // Input Label
+        JLabel userLabel = new JLabel("Enter a Value:");
+        userLabel.setForeground(Color.WHITE);
+        userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(userLabel, gbc);
 
-    // Input TextField
-    tempUserText = new JTextField();
-    tempUserText.setFont(new Font("Arial", Font.PLAIN, 14));
-    gbc.gridy = 1;
-    panel.add(tempUserText, gbc);
+        // Input TextField
+        tempUserText = new JTextField();
+        tempUserText.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 1;
+        panel.add(tempUserText, gbc);
 
-    // From Label
-    JLabel fromLabel = new JLabel("From:");
-    fromLabel.setForeground(Color.WHITE);
-    fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-    gbc.gridy = 2;
-    gbc.gridx = 0;
-    panel.add(fromLabel, gbc);
+        // From Label
+        JLabel fromLabel = new JLabel("From:");
+        fromLabel.setForeground(Color.WHITE);
+        fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        panel.add(fromLabel, gbc);
 
-    // From ComboBox
-    String[] temperatureUnits = {"Celsius", "Fahrenheit"};
-    tempFromBox = new JComboBox<>(temperatureUnits);
-    tempFromBox.setFont(new Font("Arial", Font.PLAIN, 14));
-    gbc.gridx = 1;
-    panel.add(tempFromBox, gbc);
+        // From ComboBox
+        String[] temperatureUnits = {"Celsius", "Fahrenheit"};
+        tempFromBox = new JComboBox<>(temperatureUnits);
+        tempFromBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(tempFromBox, gbc);
 
-    // To Label
-    JLabel toLabel = new JLabel("To:");
-    toLabel.setForeground(Color.WHITE);
-    toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-    gbc.gridy = 3;
-    gbc.gridx = 0;
-    panel.add(toLabel, gbc);
+        // To Label
+        JLabel toLabel = new JLabel("To:");
+        toLabel.setForeground(Color.WHITE);
+        toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        panel.add(toLabel, gbc);
 
-    // To ComboBox
-    tempToBox = new JComboBox<>(temperatureUnits);
-    tempToBox.setFont(new Font("Arial", Font.PLAIN, 14));
-    gbc.gridx = 1;
-    panel.add(tempToBox, gbc);
+        // To ComboBox
+        tempToBox = new JComboBox<>(temperatureUnits);
+        tempToBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(tempToBox, gbc);
 
-    // Convert Button
-    JButton convertButton = new JButton("Convert");
-    convertButton.setFont(new Font("Arial", Font.BOLD, 14));
-    convertButton.setBackground(new Color(43, 43, 43));
-    convertButton.setForeground(Color.WHITE);
-    convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
-    convertButton.setActionCommand("Temperature"); // Identifies this button's action
-    convertButton.addActionListener(this); // Links to actionPerformed
-    gbc.gridy = 4;
-    gbc.gridwidth = 2;
-    panel.add(convertButton, gbc);
+        // Convert Button
+        JButton convertButton = new JButton("Convert");
+        convertButton.setFont(new Font("Arial", Font.BOLD, 14));
+        convertButton.setBackground(new Color(43, 43, 43));
+        convertButton.setForeground(Color.WHITE);
+        convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
+        convertButton.setActionCommand("Temperature"); // Identifies this button's action
+        convertButton.addActionListener(this); // Links to actionPerformed
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        panel.add(convertButton, gbc);
 
-    // Answer Label
-    JLabel answer = new JLabel("Answer:");
-    answer.setForeground(Color.WHITE);
-    answer.setFont(new Font("Arial", Font.PLAIN, 14));
-    gbc.gridy = 5;
-    gbc.gridwidth = 1;
-    gbc.gridx = 0;
-    panel.add(answer, gbc);
+        // Answer Label
+        JLabel answer = new JLabel("Answer:");
+        answer.setForeground(Color.WHITE);
+        answer.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 5;
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        panel.add(answer, gbc);
 
-    // Answer TextField
-    tempUserAnswer = new JTextField();
-    tempUserAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
-    tempUserAnswer.setEditable(false); // Output field should not be editable
-    gbc.gridx = 1;
-    panel.add(tempUserAnswer, gbc);
+        // Answer TextField
+        tempUserAnswer = new JTextField();
+        tempUserAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
+        tempUserAnswer.setEditable(false); // Output field should not be editable
+        gbc.gridx = 1;
+        panel.add(tempUserAnswer, gbc);
 
-    return panel; // Return the fully constructed panel
-}
+        return panel; // Return the fully constructed panel
+    }
 
-@Override
+    // Length conversion panel
+    private JPanel createLengthPanel() {
+        JPanel panel = new JPanel(new GridBagLayout());
+        panel.setBackground(new Color(60, 63, 65));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+    
+        // Input Label
+        JLabel userLabel = new JLabel("Enter a Value:");
+        userLabel.setForeground(Color.WHITE);
+        userLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(userLabel, gbc);
+    
+        // Input TextField
+        lenghtUserText = new JTextField();
+        lenghtUserText.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 1;
+        panel.add(lenghtUserText, gbc);
+    
+        // From Label
+        JLabel fromLabel = new JLabel("From:");
+        fromLabel.setForeground(Color.WHITE);
+        fromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        panel.add(fromLabel, gbc);
+    
+        // From ComboBox
+        lenghtFromBox = new JComboBox<>(new String[]{"Meter", "Kilometer", "Centimeter", "Mile", "Yard", "Foot", "Inch"});
+        lenghtFromBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(lenghtFromBox, gbc);
+    
+        // To Label
+        JLabel toLabel = new JLabel("To:");
+        toLabel.setForeground(Color.WHITE);
+        toLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        panel.add(toLabel, gbc);
+    
+        // To ComboBox
+        lenghtToBox = new JComboBox<>(new String[]{"Meter", "Kilometer", "Centimeter", "Mile", "Yard", "Foot", "Inch"});
+        lenghtToBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridx = 1;
+        panel.add(lenghtToBox, gbc);
+    
+        // Convert Button
+        JButton convertButton = new JButton("Convert");
+        convertButton.setFont(new Font("Arial", Font.BOLD, 14));
+        convertButton.setBackground(new Color(43, 43, 43));
+        convertButton.setForeground(Color.WHITE);
+        convertButton.setBorder(BorderFactory.createLineBorder(new Color(99, 99, 99)));
+        convertButton.setActionCommand("Length");
+        convertButton.addActionListener(this);
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        panel.add(convertButton, gbc);
+    
+        // Answer Label
+        JLabel answer = new JLabel("Answer:");
+        answer.setForeground(Color.WHITE);
+        answer.setFont(new Font("Arial", Font.PLAIN, 14));
+        gbc.gridy = 5;
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        panel.add(answer, gbc);
+    
+        // Answer TextField
+        lenghtUserAnswer = new JTextField();
+        lenghtUserAnswer.setFont(new Font("Arial", Font.PLAIN, 14));
+        lenghtUserAnswer.setEditable(false);
+        gbc.gridx = 1;
+        panel.add(lenghtUserAnswer, gbc);
+    
+        return panel;
+    }
+    
+
+    @Override
     public void actionPerformed(ActionEvent e) {
     try {
         String actionCommand = e.getActionCommand(); // Identify the source tab
@@ -301,107 +389,168 @@ private JPanel createTemperaturePanel() {
         String fromUnit;
         String toUnit;
         String result = "";
-        
+
         switch (actionCommand) {
-        case "NumberSystem" -> {
-        // Get values from the Number System tab
-        input = nsUserText.getText().trim();
-        fromUnit = (String) nsFromBox.getSelectedItem();
-        toUnit = (String) nsToBox.getSelectedItem();
+            case "NumberSystem" -> {
+            // Get values from the Number System tab
+            input = nsUserText.getText().trim();
+            fromUnit = (String) nsFromBox.getSelectedItem();
+            toUnit = (String) nsToBox.getSelectedItem();
 
-        if (input.isEmpty()) {
-            throw new IllegalArgumentException("Input cannot be empty.");
+            if (input.isEmpty()) {
+                throw new IllegalArgumentException("Input cannot be empty.");
+            }
+
+            // Parse input and perform the conversion
+            int value = switch (fromUnit) {
+                case "Decimal" -> Integer.parseInt(input);
+                case "Binary" -> Integer.parseInt(input, 2);
+                case "Hexadecimal" -> Integer.parseInt(input, 16);
+                case "Octal" -> Integer.parseInt(input, 8);
+                default -> throw new IllegalArgumentException("Invalid Number System.");
+            };
+
+            result = switch (toUnit) {
+                case "Decimal" -> String.valueOf(value);
+                case "Binary" -> Integer.toBinaryString(value);
+                case "Hexadecimal" -> Integer.toHexString(value).toUpperCase();
+                case "Octal" -> Integer.toOctalString(value);
+                default -> throw new IllegalArgumentException("Invalid Number System.");
+            };
+
+            nsUserAnswer.setText(result);
+            }
+            case "Weight" -> {
+            // Get values from the Weight tab
+            input = weightUserText.getText().trim();
+            fromUnit = (String) weightFromBox.getSelectedItem();
+            toUnit = (String) weightToBox.getSelectedItem();
+
+            if (input.isEmpty()) {
+                throw new IllegalArgumentException("Input cannot be empty.");
+            }
+
+            double weight = Double.parseDouble(input); // Parse as a double
+            if (fromUnit.equals("Kg") && toUnit.equals("Lb")) {
+                result = String.format("%.2f", weight * 2.20462) + " pounds";
+            } else if (fromUnit.equals("Lb") && toUnit.equals("Kg")) {
+                result = String.format("%.2f", weight / 2.20462) + " kilograms";
+            } else if (fromUnit.equals(toUnit)) {
+                result = input + (fromUnit.equals("Kg") ? " kilograms" : " pounds");
+            } else {
+                throw new IllegalArgumentException("Invalid Weight Conversion.");
+            }
+
+            weightUserAnswer.setText(result);
+            }
+            case "Temperature" -> {
+            // Get values from the Temperature tab
+            input = tempUserText.getText().trim();
+            fromUnit = (String) tempFromBox.getSelectedItem();
+            toUnit = (String) tempToBox.getSelectedItem();
+
+            // Check if input is empty or invalid
+            if (input.isEmpty()) {
+                throw new IllegalArgumentException("Input cannot be empty.");
+            }
+
+            try {
+                // Parse input as a double
+                double temp = Double.parseDouble(input);
+
+                // Perform the conversion
+                if (fromUnit.equals("Celsius") && toUnit.equals("Fahrenheit")) {
+                    result = String.format("%.2f", (temp * 9 / 5) + 32) + " °F";
+                } else if (fromUnit.equals("Fahrenheit") && toUnit.equals("Celsius")) {
+                    result = String.format("%.2f", (temp - 32) * 5 / 9) + " °C";
+                } else if (fromUnit.equals(toUnit)) {
+                    result = input + (fromUnit.equals("Celsius") ? " °C" : " °F");
+                } else {
+                    throw new IllegalArgumentException("Invalid Temperature Conversion.");
+                }
+
+                tempUserAnswer.setText(result);
+
+            } catch (NumberFormatException ex) {
+                // Handle non-numeric input
+                throw new IllegalArgumentException("Please enter a valid numeric value.");
+            }
         }
+            case "Length" -> {
+            // Get values from the Length tab
+            input = lenghtUserText.getText().trim();
+            fromUnit = (String) lenghtFromBox.getSelectedItem();
+            toUnit = (String) lenghtToBox.getSelectedItem();
 
-        // Parse input and perform the conversion
-        int value = switch (fromUnit) {
-            case "Decimal" -> Integer.parseInt(input);
-            case "Binary" -> Integer.parseInt(input, 2);
-            case "Hexadecimal" -> Integer.parseInt(input, 16);
-            case "Octal" -> Integer.parseInt(input, 8);
-            default -> throw new IllegalArgumentException("Invalid Number System.");
-        };
+            if (input.isEmpty()) {
+                throw new IllegalArgumentException("Input cannot be empty.");
+            }
 
-        result = switch (toUnit) {
-            case "Decimal" -> String.valueOf(value);
-            case "Binary" -> Integer.toBinaryString(value);
-            case "Hexadecimal" -> Integer.toHexString(value).toUpperCase();
-            case "Octal" -> Integer.toOctalString(value);
-            default -> throw new IllegalArgumentException("Invalid Number System.");
-        };
+            try {
+                double length = Double.parseDouble(input); // Parse input as double
 
-        nsUserAnswer.setText(result);
-    }case "Weight" -> {
-        // Get values from the Weight tab
-        input = weightUserText.getText().trim();
-        fromUnit = (String) weightFromBox.getSelectedItem();
-        toUnit = (String) weightToBox.getSelectedItem();
+                // Conversion rates to meters
+                double toMeters = switch (fromUnit) {
+                    case "Meter" -> 1.0;
+                    case "Kilometer" -> 1000.0;
+                    case "Centimeter" -> 0.01;
+                    case "Mile" -> 1609.34;
+                    case "Yard" -> 0.9144;
+                    case "Foot" -> 0.3048;
+                    case "Inch" -> 0.0254;
+                    default -> throw new IllegalArgumentException("Invalid Length Unit.");
+                };
 
-        if (input.isEmpty()) {
-            throw new IllegalArgumentException("Input cannot be empty.");
+                // Conversion rates from meters
+                double fromMeters = switch (toUnit) {
+                    case "Meter" -> 1.0;
+                    case "Kilometer" -> 0.001;
+                    case "Centimeter" -> 100.0;
+                    case "Mile" -> 0.000621371;
+                    case "Yard" -> 1.09361;
+                    case "Foot" -> 3.28084;
+                    case "Inch" -> 39.3701;
+                    default -> throw new IllegalArgumentException("Invalid Length Unit.");
+                };
+
+                // Perform the conversion
+                double convertedLength = length * toMeters * fromMeters;
+                result = String.format("%.4f", convertedLength) + " " + toUnit;
+
+                // Display the result
+                lenghtUserAnswer.setText(result);
+
+            } catch (NumberFormatException ex) {
+                throw new IllegalArgumentException("Please enter a valid numeric value.");
+            }
         }
+        default -> throw new IllegalArgumentException("Unknown action command.");
+    }
 
-        double weight = Double.parseDouble(input); // Parse as a double
-        if (fromUnit.equals("Kg") && toUnit.equals("Lb")) {
-            result = String.format("%.2f", weight * 2.20462) + " pounds";
-        } else if (fromUnit.equals("Lb") && toUnit.equals("Kg")) {
-            result = String.format("%.2f", weight / 2.20462) + " kilograms";
-        } else if (fromUnit.equals(toUnit)) {
-            result = input + (fromUnit.equals("Kg") ? " kilograms" : " pounds");
-        } else {
-            throw new IllegalArgumentException("Invalid Weight Conversion.");
-        }
-
-        weightUserAnswer.setText(result);
-    }case "Temperature" -> {
-        // Get values from the Temperature tab
-        input = tempUserText.getText().trim();
-        fromUnit = (String) tempFromBox.getSelectedItem();
-        toUnit = (String) tempToBox.getSelectedItem();
-
-        if (input.isEmpty()) {
-            throw new IllegalArgumentException("Input cannot be empty.");
-        }
-
-        double temp = Double.parseDouble(input); // Parse as a double
-        if (fromUnit.equals("Celsius") && toUnit.equals("Fahrenheit")) {
-            result = String.format("%.2f", (temp * 9 / 5) + 32) + " °F";
-        } else if (fromUnit.equals("Fahrenheit") && toUnit.equals("Celsius")) {
-            result = String.format("%.2f", (temp - 32) * 5 / 9) + " °C";
-        } else if (fromUnit.equals(toUnit)) {
-            result = input + (fromUnit.equals("Celsius") ? " °C" : " °F");
-        } else {
-            throw new IllegalArgumentException("Invalid Temperature Conversion.");
-        }
-
-        tempUserAnswer.setText(result);
-    }default -> throw new IllegalArgumentException("Unknown action command.");
-}
-        
-            // Increment usage count
-            usageCount++;
+        // Increment usage count
+        usageCount++;
         if (usageCount == 100) {
             JOptionPane.showMessageDialog(null,
-                        "Congratulations! You've used the program 100 times!",
-                        "Milestone Achieved",
+                    "Congratulations! You've used the program 100 times!",
+                    "Milestone Achieved",
                     JOptionPane.INFORMATION_MESSAGE);
-    }
-
-        } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(null,
-                    "Please enter a valid numeric value.",
-                    "Invalid Input",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (IllegalArgumentException ex) {
-        JOptionPane.showMessageDialog(null,
-                    ex.getMessage(),
-                    "Conversion Error",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null,
-                    "An unexpected error occurred.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
         }
+
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(null,
+                "Please enter a valid numeric value.",
+                "Invalid Input",
+                JOptionPane.ERROR_MESSAGE);
+    } catch (IllegalArgumentException ex) {
+        JOptionPane.showMessageDialog(null,
+                ex.getMessage(),
+                "Conversion Error",
+                JOptionPane.ERROR_MESSAGE);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null,
+                "An unexpected error occurred.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
     }
 }
+}    
