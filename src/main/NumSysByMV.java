@@ -799,10 +799,12 @@ public class NumSysByMV implements ActionListener {
         
             // Display the result
             nsUserAnswer.setText(finalResult);
-        
-            // Show the detailed explanation in a pop-up
-            JOptionPane.showMessageDialog(null, conversionSteps.toString(), 
-                                            "Detailed Conversion Steps", JOptionPane.INFORMATION_MESSAGE);
+
+            conversionSteps.append("\nFun Fact: Did you know that the binary system, the foundation of modern computing, was inspired by ancient I Ching binary concepts from China?")
+               .append("\n\nLearn more about number system conversions: https://byjus.com/maths/number-system-conversion/");
+                JOptionPane.showMessageDialog(null, conversionSteps.toString(), 
+                              "Detailed Conversion Steps & Fun Fact", JOptionPane.INFORMATION_MESSAGE);
+
         }
             
 
@@ -878,8 +880,11 @@ public class NumSysByMV implements ActionListener {
             
                 // Display result
                 weightUserAnswer.setText(String.format("%.2f", finalResult) + " " + toUnit);
+                conversionSteps.append("\nFun Fact: The kilogram was originally defined in 1795 as the mass of one liter of water at 4°C.")
+               .append("\n\nLearn more about weight conversions: https://flexbooks.ck12.org/cbook/ck-12-cbse-maths-class-6/section/6.8/primary/lesson/weight-conversion/");
                 JOptionPane.showMessageDialog(null, conversionSteps.toString(), 
-                                              "Detailed Conversion Steps", JOptionPane.INFORMATION_MESSAGE);
+                              "Detailed Conversion Steps & Fun Fact", JOptionPane.INFORMATION_MESSAGE);
+
             }
   
             case "Temperature" -> {
@@ -918,9 +923,12 @@ public class NumSysByMV implements ActionListener {
                     throw new IllegalArgumentException("Invalid Temperature Conversion.");
                 }
             
-                // Show detailed conversion steps
+                
+                conversionSteps.append("\nFun Fact: The Fahrenheit scale was invented in 1724, and its zero point was based on the temperature of a salt and ice mixture!")
+               .append("\n\nLearn more about temperature conversions: https://www.cuemath.com/temperature-conversion-formulas/");
                 JOptionPane.showMessageDialog(null, conversionSteps.toString(), 
-                                              "Detailed Conversion Steps", JOptionPane.INFORMATION_MESSAGE);
+                              "Detailed Conversion Steps & Fun Fact", JOptionPane.INFORMATION_MESSAGE);
+
             }
              
             case "Length" -> {
@@ -988,9 +996,11 @@ public class NumSysByMV implements ActionListener {
                 // Display the result
                 lengthUserAnswer.setText(String.format("%.4f", convertedLength) + " " + toUnit);
             
-                // Show the detailed explanation in a pop-up
+                conversionSteps.append("\nFun Fact: The meter was initially defined in 1793 as one ten-millionth of the distance from the equator to the North Pole!")
+               .append("\n\nLearn more about length conversions: https://byjus.com/maths/length-conversion/");
                 JOptionPane.showMessageDialog(null, conversionSteps.toString(), 
-                                              "Detailed Conversion Steps", JOptionPane.INFORMATION_MESSAGE);
+                              "Detailed Conversion Steps & Fun Fact", JOptionPane.INFORMATION_MESSAGE);
+
             }
             
             case "Time" -> {
@@ -1062,9 +1072,11 @@ public class NumSysByMV implements ActionListener {
                 // Display the result
                 timeUserAnswer.setText(String.format("%.4f", convertedTime) + " " + toUnit);
             
-                // Show the detailed explanation in a pop-up
+                conversionSteps.append("\nFun Fact: A leap year occurs every 4 years to account for Earth's 365.25-day orbit around the Sun.")
+               .append("\n\nLearn more about time conversions: https://study.com/academy/lesson/converting-units-of-time.html#:~:text=They%20include%20hours%2C%20minutes%20and,hours%2C%20you%20divide%20by%2060.");
                 JOptionPane.showMessageDialog(null, conversionSteps.toString(), 
-                                              "Detailed Conversion Steps", JOptionPane.INFORMATION_MESSAGE);
+                              "Detailed Conversion Steps & Fun Fact", JOptionPane.INFORMATION_MESSAGE);
+
             }             
     }
 
